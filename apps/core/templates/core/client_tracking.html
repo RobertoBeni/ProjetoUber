@@ -1,0 +1,301 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Rastreamento Real-time — FreteHub{% endblock %}
+
+{% block extra_css %}
+.tracking-container {
+    max-width: 900px;
+    margin: 1.5rem auto;
+}
+
+.tracking-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    .tracking-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Simulated Map Dashboard */
+.map-canvas {
+    background-color: #1a1e29;
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.map-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.15;
+    background-image: radial-gradient(circle, var(--text-muted) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.map-card-info {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    background-color: rgba(18, 22, 32, 0.9);
+    border: 1px solid var(--glass-border);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    backdrop-filter: blur(8px);
+}
+
+.timeline {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.timeline-item {
+    position: relative;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 0.25rem;
+    width: 0.85rem;
+    height: 0.85rem;
+    background-color: var(--accent);
+    border: 2px solid var(--bg-primary);
+    border-radius: 50%;
+}
+
+.timeline-dot-anomaly {
+    background-color: var(--danger);
+}
+
+.timeline-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.timeline-title {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+}
+
+.timeline-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
+.live-badge {
+    background-color: var(--danger);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.live-dot {
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
+    animation: pulse-live 1.5s infinite;
+}
+
+@keyframes pulse-live {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+{% endblock %}
+
+{% block content %}
+<div class="tracking-container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+        <h2 style="font-size: 1.75rem; color: white;">Rastreamento do Frete #{{ order.id|slice:":8" }}</h2>
+        <span class="live-badge"><span class="live-dot"></span> WebSocket Ativo</span>
+    </div>
+
+    <div class="tracking-grid">
+        <!-- Left: Telemetry Panel & Map Placeholder -->
+        <div>
+            <div class="map-canvas">
+                <div class="map-background"></div>
+                <div style="font-size:3rem; margin-bottom:1rem;">🗺️</div>
+                <div style="font-weight:600; color:white; font-size:1.1rem; text-shadow:0 2px 4px rgba(0,0,0,0.5);">Painel de Rastreabilidade</div>
+                <p style="font-size:0.85rem; color:var(--text-muted); max-width:280px; text-align:center; margin-top:0.5rem;">As posições de telemetria enviadas pelo motorista em movimento serão mostradas no mapa em tempo real.</p>
+                
+                <div class="map-card-info">
+                    <div>
+                        <strong>Lat/Lng Atual:</strong><br>
+                        <span id="liveCoords" style="font-family:monospace;">
+                            {{ order.origin_latitude|floatformat:4 }}, {{ order.origin_longitude|floatformat:4 }}
+                        </span>
+                    </div>
+                    <div>
+                        <strong>Velocidade:</strong><br>
+                        <span id="liveSpeed" style="font-family:monospace; font-weight:700;">0.00</span> km/h
+                    </div>
+                    <div>
+                        <strong>ETA Estimado:</strong><br>
+                        <span id="liveETA" style="font-family:monospace; color:var(--success); font-weight:700;">
+                            {% if order.estimated_arrival_time %}{{ order.estimated_arrival_time|date:"H:i" }}{% else %}A calcular{% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details card -->
+            <div class="glass-card">
+                <h3 style="font-size:1.1rem; margin-bottom:1rem; color:white;">Especificações do Envio</h3>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; font-size:0.85rem; color:var(--text-muted);">
+                    <div>
+                        <strong>Carga:</strong> {{ order.cargo_description }}
+                    </div>
+                    <div>
+                        <strong>Veículo Selecionado:</strong> {{ order.vehicle.brand }} {{ order.vehicle.model }} ({{ order.vehicle.plate }})
+                    </div>
+                    <div>
+                        <strong>Origem:</strong> {{ order.origin_address }}
+                    </div>
+                    <div>
+                        <strong>Destino:</strong> {{ order.destination_address }}
+                    </div>
+                    <div>
+                        <strong>Status Geral:</strong> <span id="liveStatusText" style="color:white; font-weight:700;">{{ order.get_status_display }}</span>
+                    </div>
+                    <div>
+                        <strong>Distância Estimada:</strong> {{ order.estimated_distance_km }} KM
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Real-time Event timeline -->
+        <div>
+            <h3 style="font-size:1.2rem; color:white; margin-bottom:1.25rem;">Timeline da Carga</h3>
+            <div class="glass-card" style="padding:1.5rem;">
+                <div class="timeline" id="eventTimeline">
+                    {% for ev in events %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot {% if ev.event_type == 'stop_detected' or ev.event_type == 'route_deviation' %}timeline-dot-anomaly{% endif %}"></div>
+                        <div class="timeline-time">{{ ev.created_at|date:"d/m/Y H:i" }}</div>
+                        <div class="timeline-title">{{ ev.get_event_type_display }}</div>
+                        <div class="timeline-desc">{{ ev.description }}</div>
+                    </div>
+                    {% empty %}
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-time">Agora</div>
+                        <div class="timeline-title">Aguardando Coleta</div>
+                        <div class="timeline-desc">Aguardando motorista iniciar coleta do frete.</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Establish standard WebSocket channels telemetry listener
+const freightId = "{{ order.id }}";
+const wsScheme = window.location.protocol === "https:" ? "wss" : "ws";
+const wsUrl = `${wsScheme}://${window.location.host}/ws/tracking/order/${freightId}/`;
+
+console.log("Conectando ao canal de rastreamento:", wsUrl);
+const trackingSocket = new WebSocket(wsUrl);
+
+trackingSocket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    console.log("Atualização de telemetria recebida:", data);
+
+    if (data.type === "location_update" || data.freight_order_id === freightId) {
+        // Update live interface metrics
+        const lat = parseFloat(data.latitude).toFixed(5);
+        const lng = parseFloat(data.longitude).toFixed(5);
+        document.getElementById("liveCoords").textContent = `${lat}, ${lng}`;
+        document.getElementById("liveSpeed").textContent = parseFloat(data.speed).toFixed(2);
+        
+        if (data.eta) {
+            const dateObj = new Date(data.eta);
+            const hours = String(dateObj.getHours()).padStart(2, '0');
+            const minutes = String(dateObj.getMinutes()).padStart(2, '0');
+            document.getElementById("liveETA").textContent = `${hours}:${minutes}`;
+        }
+        
+        // Update status text mapping
+        const statusMap = {
+            'requested': 'Solicitado',
+            'waiting_driver': 'Aguardando Motorista',
+            'driver_found': 'Motorista Encontrado',
+            'driver_going_to_pickup': 'Motorista a caminho da coleta',
+            'arrived_at_origin': 'Chegou na Origem',
+            'cargo_collected': 'Carga Coletada',
+            'in_transit': 'Em Trânsito',
+            'temporarily_stopped': 'Parado Temporariamente',
+            'route_deviation_detected': 'Desvio de Rota',
+            'near_destination': 'Próximo ao Destino',
+            'arrived_at_destination': 'Chegou ao Destino',
+            'delivered': 'Entregue',
+            'completed': 'Finalizado',
+            'cancelled': 'Cancelado'
+        };
+        
+        if (data.status && statusMap[data.status]) {
+            document.getElementById("liveStatusText").textContent = statusMap[data.status];
+        }
+
+        // Dynamically add a temporary tracking update line in timeline
+        const timeline = document.getElementById("eventTimeline");
+        const newItem = document.createElement("div");
+        newItem.className = "timeline-item";
+        
+        const now = new Date();
+        const timeStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth()+1).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        
+        // Custom style check for anomaly
+        let isAnomaly = data.status === 'temporarily_stopped' || data.status === 'route_deviation_detected';
+        newItem.innerHTML = `
+            <div class="timeline-dot ${isAnomaly ? 'timeline-dot-anomaly' : ''}"></div>
+            <div class="timeline-time">${timeStr}</div>
+            <div class="timeline-title">${statusMap[data.status] || 'Posição Atualizada'}</div>
+            <div class="timeline-desc">Telemetria recebida em tempo real. Vel: ${parseFloat(data.speed).toFixed(1)} km/h.</div>
+        `;
+        
+        timeline.insertBefore(newItem, timeline.firstChild);
+    }
+};
+
+trackingSocket.onclose = function(e) {
+    console.error("Conexão com WebSocket de rastreamento encerrada de forma abrupta.");
+};
+</script>
+{% endblock %}

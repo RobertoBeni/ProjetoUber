@@ -1,0 +1,368 @@
+{% extends 'core/base.html' %}
+
+{% block title %}FreteHub | Torre de Controle de Operações ao Vivo{% endblock %}
+
+{% block extra_css %}
+<style>
+    .live-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    @media (max-width: 900px) {
+        .live-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Map container styling */
+    .map-box {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .map-canvas-container {
+        height: 400px;
+        background: #0d1117;
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Simulation Control Panel */
+    .sim-panel {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
+    }
+
+    .btn-sim {
+        padding: 0.6rem 1.2rem;
+        border-radius: 0.375rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .btn-sim:hover {
+        transform: translateY(-1px);
+    }
+
+    .btn-sim-alert { background-color: var(--danger); color: white; }
+    .btn-sim-warn { background-color: var(--warning); color: #0a0c10; }
+    .btn-sim-ok { background-color: var(--success); color: white; }
+
+    /* Timeline Panel */
+    .timeline-box {
+        max-height: 520px;
+        overflow-y: auto;
+    }
+
+    .timeline-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .timeline-item {
+        display: flex;
+        gap: 1rem;
+        border-left: 2px solid var(--border);
+        padding-left: 1.25rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -5px;
+        top: 3px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: var(--border);
+    }
+
+    .timeline-item.critical::before { background-color: var(--danger); box-shadow: 0 0 8px var(--danger); }
+    .timeline-item.warning::before { background-color: var(--warning); box-shadow: 0 0 8px var(--warning); }
+    .timeline-item.success::before { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
+
+    .timeline-time {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        min-width: 55px;
+    }
+
+    .timeline-content {
+        font-size: 0.85rem;
+    }
+
+    .timeline-title {
+        font-weight: 700;
+        color: white;
+        margin-bottom: 0.25rem;
+    }
+
+    .timeline-desc {
+        color: var(--text-muted);
+    }
+
+    /* Telemetry Info overlays */
+    .telemetry-overlay {
+        position: absolute;
+        top: 2.5rem;
+        left: 2.5rem;
+        background: rgba(10, 12, 16, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--border);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.8rem;
+        font-family: monospace;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        color: #10b981;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <h1 style="font-size: 2.2rem; font-weight: 800; color: white;">Torre de Controle Operacional</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.25rem;">Rastreamento dinâmico em tempo real de frotas e gerenciamento instantâneo de incidentes.</p>
+    </div>
+    <div style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); color: #60a5fa; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+        <span style="width: 8px; height: 8px; border-radius: 50%; background: #60a5fa; animation: pulse-active 1.5s infinite;"></span>
+        CONEXÃO SATELITAL ATIVA
+    </div>
+</div>
+
+<div class="live-grid">
+    <!-- Map Canvas & Telemetry Controls -->
+    <div class="map-box">
+        <h3 style="color: white; font-size: 1.25rem; margin-bottom: 1.5rem;">🌎 Rota Ativa — Telemetria de Viagem</h3>
+        
+        <div class="map-canvas-container" id="map-container">
+            <!-- Telemetry Overlay Info -->
+            <div class="telemetry-overlay" id="telemetry-panel">
+                <div>📡 TICK: GPS_OK</div>
+                <div>📍 LAT: -15.60251 | LNG: -56.10425</div>
+                <div>⚡ VEL: 72 km/h</div>
+                <div>🚦 STATUS: EM ROTA (OK)</div>
+            </div>
+            
+            <!-- SVG Map Path Simulation -->
+            <svg width="100%" height="100%" style="background-color: #0b0f17;" id="svg-map">
+                <!-- Grid background -->
+                <defs>
+                    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+                
+                <!-- Terrestrial Route Path -->
+                <path d="M 80,100 Q 150,220 280,180 T 520,320" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="6" stroke-linecap="round" />
+                <path id="route-line" d="M 80,100 Q 150,220 280,180 T 520,320" fill="none" stroke="#2563eb" stroke-width="4" stroke-linecap="round" style="transition: stroke 0.5s;" />
+                
+                <!-- Starting and Destination Indicators -->
+                <circle cx="80" cy="100" r="8" fill="#10b981" />
+                <text x="75" y="85" fill="#9ca3af" font-size="11" font-weight="700">Origem</text>
+                
+                <circle cx="520" cy="320" r="8" fill="#ef4444" />
+                <text x="510" y="305" fill="#9ca3af" font-size="11" font-weight="700">Destino</text>
+                
+                <!-- Moving vehicle indicator -->
+                <circle id="vehicle-dot" cx="80" cy="100" r="10" fill="#34d399" style="box-shadow: 0 0 10px #34d399; transition: cx 1s linear, cy 1s linear, fill 0.5s;" />
+            </svg>
+        </div>
+        
+        <div class="sim-panel">
+            <button type="button" class="btn-sim btn-sim-alert" id="btn-deviate">Simular Desvio de Rota</button>
+            <button type="button" class="btn-sim btn-sim-warn" id="btn-stop">Simular Parada de Risco</button>
+            <button type="button" class="btn-sim btn-sim-ok" id="btn-normalize">Normalizar Viagem</button>
+        </div>
+    </div>
+
+    <!-- Timeline Chronological Panel -->
+    <div class="glass-card">
+        <h3 style="color: white; font-size: 1.25rem; margin-bottom: 1rem;">📋 Linha do Tempo da Operação</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Incidentes e logs cronológicos reportados pela telemetria inteligente.</p>
+        
+        <div class="timeline-box">
+            <div class="timeline-list" id="timeline-container">
+                <!-- Dynamic timeline events will be appended here -->
+                <div class="timeline-item success">
+                    <div class="timeline-time">10:45</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Coleta Finalizada</div>
+                        <div class="timeline-desc">Fotos dos equipamentos e romaneio de pesagem aprovados com sucesso no ponto de origem.</div>
+                    </div>
+                </div>
+                <div class="timeline-item success">
+                    <div class="timeline-time">10:40</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Veículo no Ponto de Origem</div>
+                        <div class="timeline-desc">Fiorino do motorista vinculada com geolocalização detectada a menos de 50 metros.</div>
+                    </div>
+                </div>
+                <div class="timeline-item success">
+                    <div class="timeline-time">10:20</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Motorista Encontrado</div>
+                        <div class="timeline-desc">Intermediação concluída pelo motor de matching inteligente em 1.8 segundos.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const vehicleDot = document.getElementById('vehicle-dot');
+        const telemetryPanel = document.getElementById('telemetry-panel');
+        const timelineContainer = document.getElementById('timeline-container');
+        const routeLine = document.getElementById('route-line');
+        
+        // Buttons
+        const btnDeviate = document.getElementById('btn-deviate');
+        const btnStop = document.getElementById('btn-stop');
+        const btnNormalize = document.getElementById('btn-normalize');
+        
+        // Define animation track points along the SVG path
+        // M 80,100 Q 150,220 280,180 T 520,320
+        // We'll simulate movement along the curve
+        const pathPoints = [
+            { x: 80, y: 100, lat: -15.6012, lng: -56.0975, speed: 45 },
+            { x: 115, y: 160, lat: -15.6035, lng: -56.0990, speed: 65 },
+            { x: 180, y: 200, lat: -15.6080, lng: -56.1012, speed: 75 },
+            { x: 280, y: 180, lat: -15.6125, lng: -56.1045, speed: 80 },
+            { x: 350, y: 220, lat: -15.6200, lng: -56.1090, speed: 70 },
+            { x: 440, y: 280, lat: -15.6320, lng: -56.1155, speed: 60 },
+            { x: 520, y: 320, lat: -15.6500, lng: -56.1200, speed: 0 }
+        ];
+        
+        let currentStep = 0;
+        let simulationInterval = null;
+        let isStopped = false;
+        let isDeviated = false;
+
+        function updateTelemetry(lat, lng, speed, statusText, statusColor) {
+            telemetryPanel.innerHTML = `
+                <div>📡 TICK: GPS_OK</div>
+                <div>📍 LAT: ${lat.toFixed(5)} | LNG: ${lng.toFixed(5)}</div>
+                <div>⚡ VEL: ${speed} km/h</div>
+                <div style="color: ${statusColor}; font-weight:700;">🚦 STATUS: ${statusText}</div>
+            `;
+        }
+
+        function appendTimelineEvent(title, desc, typeClass) {
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            
+            const item = document.createElement('div');
+            item.className = `timeline-item ${typeClass}`;
+            item.innerHTML = `
+                <div class="timeline-time">${timeStr}</div>
+                <div class="timeline-content">
+                    <div class="timeline-title">${title}</div>
+                    <div class="timeline-desc">${desc}</div>
+                </div>
+            `;
+            timelineContainer.prepend(item);
+        }
+
+        // Animated telemetry ticker loop
+        function startSimulation() {
+            simulationInterval = setInterval(() => {
+                if (isStopped) return;
+                
+                if (currentStep < pathPoints.length - 1) {
+                    currentStep++;
+                } else {
+                    currentStep = 0; // Loop simulation
+                    appendTimelineEvent('Viagem Reiniciada', 'Telemetria reiniciada no ponto de origem.', 'success');
+                }
+                
+                const point = pathPoints[currentStep];
+                
+                // If deviated, add random noise to position
+                let drawX = point.x;
+                let drawY = point.y;
+                let latVal = point.lat;
+                let lngVal = point.lng;
+                
+                if (isDeviated) {
+                    drawX += 50;
+                    drawY -= 30;
+                    latVal += 0.005;
+                    lngVal -= 0.004;
+                }
+                
+                vehicleDot.setAttribute('cx', drawX);
+                vehicleDot.setAttribute('cy', drawY);
+                
+                let statusMsg = 'EM ROTA (OK)';
+                let color = '#10b981';
+                
+                if (isDeviated) {
+                    statusMsg = 'DESVIO DETECTADO';
+                    color = '#ef4444';
+                }
+                
+                updateTelemetry(latVal, lngVal, point.speed, statusMsg, color);
+            }, 3000);
+        }
+
+        startSimulation();
+
+        // Control handlers
+        btnDeviate.addEventListener('click', () => {
+            isDeviated = true;
+            isStopped = false;
+            vehicleDot.setAttribute('fill', '#ef4444');
+            routeLine.setAttribute('stroke', '#ef4444');
+            appendTimelineEvent('GATILHO: Desvio de Rota', 'O motorista se afastou do traçado geométrico planejado. Atualizando alertas da central.', 'critical');
+        });
+
+        btnStop.addEventListener('click', () => {
+            isStopped = true;
+            isDeviated = false;
+            vehicleDot.setAttribute('fill', '#fbbf24');
+            routeLine.setAttribute('stroke', '#fbbf24');
+            const point = pathPoints[currentStep];
+            updateTelemetry(point.lat, point.lng, 0, 'PARADA INESPERADA', '#fbbf24');
+            appendTimelineEvent('GATILHO: Parada Crítica', 'Veículo imóvel por mais de 5 minutos em trecho não planejado da rota.', 'warning');
+        });
+
+        btnNormalize.addEventListener('click', () => {
+            isStopped = false;
+            isDeviated = false;
+            vehicleDot.setAttribute('fill', '#34d399');
+            routeLine.setAttribute('stroke', '#2563eb');
+            const point = pathPoints[currentStep];
+            updateTelemetry(point.lat, point.lng, point.speed, 'EM ROTA (OK)', '#10b981');
+            appendTimelineEvent('GATILHO: Viagem Normalizada', 'Rota e telemetria restabelecidas. Alarmes desativados pela Torre de Controle.', 'success');
+        });
+    });
+</script>
+{% endblock %}

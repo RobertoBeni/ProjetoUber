@@ -1,0 +1,130 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Entrar — FreteHub{% endblock %}
+
+{% block extra_css %}
+.login-container {
+    max-width: 420px;
+    margin: 4rem auto;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.login-header h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, white, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-header p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.form-control {
+    width: 100%;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.btn-block {
+    width: 100%;
+    padding: 0.75rem;
+    margin-top: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.error-message {
+    color: var(--danger);
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+.tip-box {
+    margin-top: 2rem;
+    background-color: rgba(37, 99, 235, 0.05);
+    border: 1px dashed rgba(37, 99, 235, 0.2);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.tip-box strong {
+    color: var(--text-main);
+}
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="glass-card">
+        <div class="login-header">
+            <h2>Acesse sua Conta</h2>
+            <p>Selecione seu portal de logística</p>
+        </div>
+
+        {% if form.errors %}
+        <div class="error-message">
+            E-mail ou senha incorretos. Por favor, tente novamente.
+        </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'portal-login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username" class="form-label">Endereço de E-mail</label>
+                <input type="email" name="username" id="id_username" class="form-control" placeholder="seu@email.com" required autofocus>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_password" class="form-label">Senha de Acesso</label>
+                <input type="password" name="password" id="id_password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn-premium btn-block">Entrar na Plataforma</button>
+        </form>
+
+        <div class="tip-box">
+            <strong>Credenciais de Demonstração (Seed):</strong><br>
+            • Admin/Operador: <strong>admin@fretehub.com</strong> / <strong>AdminPassword123</strong><br>
+            • Cliente PF: <strong>pf_client@fretehub.com</strong> / <strong>ClientPassword123</strong><br>
+            • Transportadora: <strong>carrier@fretehub.com</strong> / <strong>CarrierPassword123</strong>
+        </div>
+    </div>
+</div>
+{% endblock %}

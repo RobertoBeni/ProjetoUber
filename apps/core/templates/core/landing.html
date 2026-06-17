@@ -1,0 +1,582 @@
+{% extends 'core/base.html' %}
+
+{% block title %}FreteHub | Inteligência e Rastreabilidade em Logística{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section styling */
+    .hero-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4rem;
+        padding: 4rem 0;
+        min-height: 70vh;
+    }
+
+    .hero-content {
+        flex: 1;
+        max-width: 600px;
+    }
+
+    .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        color: #60a5fa;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        line-height: 1.1;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #ffffff, #9ca3af);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-title span {
+        background: linear-gradient(135deg, #3b82f6, #10b981);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero-description {
+        font-size: 1.15rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        margin-bottom: 2.5rem;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn-secondary {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border);
+        color: var(--text-main);
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 600;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .btn-secondary:hover {
+        background-color: var(--bg-tertiary);
+        border-color: rgba(255,255,255,0.15);
+    }
+
+    /* Grid Features styling */
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 4rem;
+        margin-bottom: 6rem;
+    }
+
+    .feature-card {
+        padding: 2.5rem 2rem;
+        text-align: left;
+    }
+
+    .feature-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 0.75rem;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        color: #34d399;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-card:nth-child(2) .feature-icon {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        color: #60a5fa;
+    }
+
+    .feature-card:nth-child(3) .feature-icon {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.25);
+        color: #fbbf24;
+    }
+
+    .feature-title {
+        font-size: 1.35rem;
+        margin-bottom: 0.75rem;
+        color: #ffffff;
+    }
+
+    .feature-desc {
+        color: var(--text-muted);
+        line-height: 1.5;
+        font-size: 0.95rem;
+    }
+
+    /* Interactive Simulator & Forms Section styling */
+    .sections-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 6rem;
+    }
+
+    @media (max-width: 900px) {
+        .hero-section {
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        .hero-content {
+            max-width: 100%;
+        }
+        .hero-actions {
+            justify-content: center;
+        }
+        .sections-wrapper {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .card-title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #ffffff;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 1rem;
+    }
+
+    /* Form styling */
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+        width: 100%;
+        background-color: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        padding: 0.75rem 1rem;
+        color: white;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-control:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        outline: none;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    /* Simulation Result card */
+    .simulator-result {
+        margin-top: 1.5rem;
+        padding: 1.5rem;
+        background: rgba(16, 185, 129, 0.05);
+        border: 1px dashed rgba(16, 185, 129, 0.3);
+        border-radius: 0.5rem;
+        display: none;
+    }
+
+    .result-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+    }
+
+    .result-item span:first-child {
+        color: var(--text-muted);
+    }
+
+    .result-item span:last-child {
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .result-price {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #34d399 !important;
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding-top: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .alert-success-custom {
+        display: none;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        color: #34d399;
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <div class="hero-badge">⚡ PLATAFORMA FRETEHUB v2.0</div>
+        <h1 class="hero-title">O Ecossistema Inteligente da <span>Logística</span></h1>
+        <p class="hero-description">
+            Conectamos indústrias, embarcadores e transportadoras autônomas em um hub automatizado de alta fidelidade.
+            Cotação dinâmica orientada por IA, rastreamento satelital robusto em mapa e integridade assegurada em LGPD.
+        </p>
+        <div class="hero-actions">
+            <a href="{% url 'portal-login' %}" class="btn-premium" style="padding: 0.75rem 2rem; font-size: 1rem;">Acessar o Portal</a>
+            <a href="#leads" class="btn-secondary">Seja um Parceiro</a>
+        </div>
+    </div>
+    
+    <div class="mockup-area" style="flex: 0.8; display: flex; justify-content: center;">
+        <div class="glass-card" style="width: 100%; max-width: 440px; padding: 2rem; border-color: rgba(37, 99, 235, 0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <div style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; animation: pulse-glow 1.5s infinite;"></div>
+                    <span style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #34d399;">Atendimento IA</span>
+                </div>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Resposta em tempo real</span>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; max-height: 220px; overflow-y: auto;">
+                <div style="background: var(--bg-tertiary); padding: 0.75rem 1rem; border-radius: 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); max-width: 90%;">
+                    <strong>Cliente</strong>: Qual o veículo correto para levar 12 toneladas de soja de Sorriso/MT até o porto de Santos?
+                </div>
+                <div style="background: rgba(37, 99, 235, 0.08); padding: 0.75rem 1rem; border-radius: 0.5rem; font-size: 0.85rem; border: 1px solid rgba(37,99,235,0.2); max-width: 90%; align-self: flex-end;">
+                    <strong>Assistente FreteHub</strong>: Conforme a regulamentação geral de grãos secos, o transporte de soja a granel exige carroceria <strong>Carreta Graneleira</strong> ou <strong>Bitrem</strong> com lona impermeável e amarras, garantindo a integridade dos grãos e evitando derramamento operacional.
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid var(--border); padding-top: 1rem; display: flex; gap: 0.5rem;">
+                <input type="text" class="form-control" placeholder="Tire uma dúvida com a IA..." style="font-size: 0.8rem; padding: 0.5rem 0.75rem;" disabled>
+                <button class="btn-premium" style="padding: 0.5rem 1rem;" disabled>Enviar</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Grid -->
+<section class="features-grid">
+    <div class="glass-card feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3 class="feature-title">Segurança & LGPD</h3>
+        <p class="feature-desc">Todos os dados sensíveis dos clientes e motoristas são criptografados de ponta a ponta e auditados pelo nosso motor de segurança interna.</p>
+    </div>
+    
+    <div class="glass-card feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3 class="feature-title">IA Analítica</h3>
+        <p class="feature-desc">Nossa IA integrada analisa compatibilidade de veículos, sugere as melhores rotas geográficas e fornece suporte instantâneo sobre regulamentos de carga.</p>
+    </div>
+    
+    <div class="glass-card feature-card">
+        <div class="feature-icon">⏱️</div>
+        <h3 class="feature-title">ETA Preditivo</h3>
+        <p class="feature-desc">Monitoramento satelital robusto que recalcula automaticamente previsões de chegada (ETA) a cada oscilação telemétrica ou parada inesperada.</p>
+    </div>
+</section>
+
+<!-- Interactive Simulator & Lead capture forms -->
+<div class="sections-wrapper">
+    <!-- Public Simulator Card -->
+    <div class="glass-card" id="simulator-card">
+        <h2 class="card-title">🌐 Simulador Público de Frete</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+            Experimente instantaneamente a nossa inteligência logística. Simule rotas e receba uma recomendação exata do veículo.
+        </p>
+        
+        <form id="freight-simulator-form">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sim-origin-lat">Latitude de Origem</label>
+                    <input type="text" id="sim-origin-lat" class="form-control" placeholder="-15.596" value="-15.596">
+                </div>
+                <div class="form-group">
+                    <label for="sim-origin-lng">Longitude de Origem</label>
+                    <input type="text" id="sim-origin-lng" class="form-control" placeholder="-56.096" value="-56.096">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sim-dest-lat">Latitude de Destino</label>
+                    <input type="text" id="sim-dest-lat" class="form-control" placeholder="-15.650" value="-15.650">
+                </div>
+                <div class="form-group">
+                    <label for="sim-dest-lng">Longitude de Destino</label>
+                    <input type="text" id="sim-dest-lng" class="form-control" placeholder="-56.130" value="-56.130">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="sim-weight">Peso Estimado (KG)</label>
+                    <input type="number" id="sim-weight" class="form-control" placeholder="120" value="120">
+                </div>
+                <div class="form-group">
+                    <label for="sim-volume">Volume Estimado (M³)</label>
+                    <input type="number" id="sim-volume" class="form-control" placeholder="1.5" value="1.5">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="sim-category">Categoria Principal da Carga</label>
+                <select id="sim-category" class="form-control">
+                    <option value="equipamentos" selected>Equipamentos Gerais / Eletrodomésticos</option>
+                    <option value="graos">Grãos Secos (Soja, Milho etc.)</option>
+                    <option value="moveis">Móveis e Mudanças</option>
+                    <option value="outros">Outros</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 1.5rem; margin: 1rem 0;">
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: pointer;">
+                    <input type="checkbox" id="sim-helper" style="accent-color: var(--accent);"> Requer Ajudante
+                </label>
+                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; cursor: pointer;">
+                    <input type="checkbox" id="sim-insurance" style="accent-color: var(--accent);"> Exige Seguro Premium
+                </label>
+            </div>
+            
+            <button type="button" id="sim-calc-btn" class="btn-premium" style="width: 100%; padding: 0.8rem; font-size: 0.95rem; margin-top: 0.5rem;">Calcular Estimativa de Rota</button>
+        </form>
+        
+        <div class="simulator-result" id="simulator-result-box">
+            <h4 style="margin-bottom: 0.75rem; color: #ffffff;">📊 Resultado da Simulação</h4>
+            <div class="result-item">
+                <span>Distância Terrestre (+15% margem)</span>
+                <span id="res-distance">-</span>
+            </div>
+            <div class="result-item">
+                <span>Tempo Estimado de Viagem</span>
+                <span id="res-duration">-</span>
+            </div>
+            <div class="result-item">
+                <span>Recomendação de Veículo</span>
+                <span id="res-vehicle" style="color: #60a5fa !important;">-</span>
+            </div>
+            <div class="result-item">
+                <span>Tipo de Carroceria Requerida</span>
+                <span id="res-body">-</span>
+            </div>
+            <div class="result-item result-price">
+                <span>Estimativa de Custo</span>
+                <span id="res-price">-</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Commercial Lead Capture Card -->
+    <div class="glass-card" id="leads">
+        <h2 class="card-title">💼 Seja um Parceiro FreteHub</h2>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+            Entre em contato com o nosso setor comercial ou departamento de Relações com Investidores para aderir ao ecossistema FreteHub.
+        </p>
+        
+        <div class="alert-success-custom" id="lead-success-alert">
+            🎉 <strong>Lead registrado com sucesso!</strong><br>
+            Agradecemos seu interesse. Nossa equipe de analistas entrará em contato em até 24 horas úteis.
+        </div>
+        
+        <form id="lead-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="lead-name">Nome Completo</label>
+                <input type="text" id="lead-name" class="form-control" placeholder="Digite seu nome completo" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="lead-email">E-mail Corporativo</label>
+                    <input type="email" id="lead-email" class="form-control" placeholder="nome@empresa.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="lead-phone">Telefone / WhatsApp</label>
+                    <input type="text" id="lead-phone" class="form-control" placeholder="(00) 00000-0000">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="lead-company">Empresa / Instituição</label>
+                    <input type="text" id="lead-company" class="form-control" placeholder="Nome da empresa">
+                </div>
+                <div class="form-group">
+                    <label for="lead-profile">Perfil de Interesse</label>
+                    <select id="lead-profile" class="form-control">
+                        <option value="investor">Investidor Logístico / Venture</option>
+                        <option value="shipper">Embarcador (Quero contratar fretes)</option>
+                        <option value="carrier">Transportadora / Frota Cadastrada</option>
+                        <option value="partner">Parceiro Comercial Estratégico</option>
+                        <option value="other">Outros Perfis</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="lead-message">Mensagem / Observação</label>
+                <textarea id="lead-message" class="form-control" rows="3" placeholder="Conte-nos como a FreteHub pode agregar valor ao seu negócio..."></textarea>
+            </div>
+            
+            <button type="button" id="lead-submit-btn" class="btn-premium" style="width: 100%; padding: 0.8rem; font-size: 0.95rem;">Enviar Proposta de Contato</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const simCalcBtn = document.getElementById('sim-calc-btn');
+        const simulatorResultBox = document.getElementById('simulator-result-box');
+        
+        simCalcBtn.addEventListener('click', function() {
+            simCalcBtn.textContent = 'Calculando inteligência...';
+            simCalcBtn.disabled = true;
+            
+            const payload = {
+                origin_latitude: document.getElementById('sim-origin-lat').value,
+                origin_longitude: document.getElementById('sim-origin-lng').value,
+                destination_latitude: document.getElementById('sim-dest-lat').value,
+                destination_longitude: document.getElementById('sim-dest-lng').value,
+                weight_kg: document.getElementById('sim-weight').value,
+                volume_m3: document.getElementById('sim-volume').value,
+                cargo_category: document.getElementById('sim-category').value,
+                requires_helper: document.getElementById('sim-helper').checked,
+                requires_insurance: document.getElementById('sim-insurance').checked
+            };
+            
+            fetch('/api/public/freight-simulator/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => {
+                simCalcBtn.textContent = 'Calcular Estimativa de Rota';
+                simCalcBtn.disabled = false;
+                
+                if (res.success) {
+                    const data = res.data;
+                    document.getElementById('res-distance').textContent = data.distance_km.toFixed(2) + ' KM';
+                    document.getElementById('res-duration').textContent = data.duration_minutes + ' min';
+                    document.getElementById('res-vehicle').textContent = data.recommended_vehicle;
+                    document.getElementById('res-body').textContent = data.recommended_body_type;
+                    document.getElementById('res-price').textContent = 'R$ ' + parseFloat(data.pricing.total_estimated_price).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                    
+                    simulatorResultBox.style.display = 'block';
+                    simulatorResultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    alert('Erro na simulação: ' + res.message);
+                }
+            })
+            .catch(err => {
+                simCalcBtn.textContent = 'Calcular Estimativa de Rota';
+                simCalcBtn.disabled = false;
+                alert('Erro ao conectar ao servidor de simulação.');
+                console.error(err);
+            });
+        });
+        
+        // Lead Form capture handler
+        const leadSubmitBtn = document.getElementById('lead-submit-btn');
+        const leadSuccessAlert = document.getElementById('lead-success-alert');
+        const leadForm = document.getElementById('lead-form');
+        
+        leadSubmitBtn.addEventListener('click', function() {
+            const name = document.getElementById('lead-name').value.trim();
+            const email = document.getElementById('lead-email').value.trim();
+            
+            if (!name || !email) {
+                alert('Nome e E-mail corporativo são obrigatórios.');
+                return;
+            }
+            
+            leadSubmitBtn.textContent = 'Processando proposta...';
+            leadSubmitBtn.disabled = true;
+            
+            const payload = {
+                name: name,
+                email: email,
+                phone: document.getElementById('lead-phone').value.trim(),
+                company: document.getElementById('lead-company').value.trim(),
+                profile_type: document.getElementById('lead-profile').value,
+                message: document.getElementById('lead-message').value.trim()
+            };
+            
+            fetch('/api/commercial/leads/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(res => {
+                leadSubmitBtn.textContent = 'Enviar Proposta de Contato';
+                leadSubmitBtn.disabled = false;
+                
+                if (res.status === 201) {
+                    leadForm.reset();
+                    leadSuccessAlert.style.display = 'block';
+                    leadSuccessAlert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    alert('Erro ao enviar dados do lead. Verifique se os dados são válidos.');
+                }
+            })
+            .catch(err => {
+                leadSubmitBtn.textContent = 'Enviar Proposta de Contato';
+                leadSubmitBtn.disabled = false;
+                alert('Erro ao conectar ao servidor.');
+                console.error(err);
+            });
+        });
+    });
+</script>
+{% endblock %}

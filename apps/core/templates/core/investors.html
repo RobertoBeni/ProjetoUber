@@ -1,0 +1,191 @@
+{% extends 'core/base.html' %}
+
+{% block title %}FreteHub | Relações com Investidores & Pitch Deck{% endblock %}
+
+{% block extra_css %}
+<style>
+    .investor-hero {
+        text-align: center;
+        padding: 5rem 0 3rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .investor-hero h1 {
+        font-size: 3.2rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #ffffff, #9ca3af);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .investor-hero p {
+        font-size: 1.25rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    /* Pitch Deck Section Cards */
+    .pitch-deck-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        margin: 4rem 0;
+    }
+
+    @media (max-width: 768px) {
+        .pitch-deck-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .deck-card {
+        padding: 3rem 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .deck-badge {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #3b82f6;
+        letter-spacing: 0.05em;
+        margin-bottom: 1rem;
+    }
+
+    .deck-title {
+        font-size: 1.6rem;
+        color: #ffffff;
+        margin-bottom: 1rem;
+    }
+
+    .deck-text {
+        color: var(--text-muted);
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-callout {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #34d399;
+        margin: 1rem 0;
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .projections-box {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 3rem;
+        margin-bottom: 6rem;
+    }
+
+    .prog-title {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #ffffff;
+    }
+
+    /* Steps list */
+    .use-of-proceeds {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .use-of-proceeds {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .proceed-item {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        text-align: center;
+    }
+
+    .proceed-pct {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #60a5fa;
+        margin-bottom: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="investor-hero">
+    <h1>O Futuro da Logística Conectada</h1>
+    <p>
+        A FreteHub está redesenhando a cadeia logística na América Latina. Descubra nossos planos de expansão, modelo financeiro altamente escalável e participe da nossa rodada de aporte estratégico.
+    </p>
+</section>
+
+<div class="pitch-deck-grid">
+    <!-- Card 1: Market -->
+    <div class="glass-card deck-card">
+        <div>
+            <span class="deck-badge">Oportunidade de Mercado</span>
+            <h3 class="deck-title">O Gigantesco Mercado Brasileiro</h3>
+            <p class="deck-text">
+                O setor de transporte rodoviário de cargas no Brasil representa mais de 6% do PIB nacional, movimentando cerca de R$ 380 bilhões anualmente. Entretanto, o mercado sofre com altos índices de ineficiência, falta de rastreabilidade e intermediários manuais que oneram as margens.
+            </p>
+        </div>
+        <div class="stat-callout">R$ 380B</div>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Tamanho do mercado endereçável anual</span>
+    </div>
+
+    <!-- Card 2: Monetization -->
+    <div class="glass-card deck-card">
+        <div>
+            <span class="deck-badge">Monetização Escalável</span>
+            <h3 class="deck-title">Modelo de Taxa (Take-Rate) de 15%</h3>
+            <p class="deck-text">
+                Diferente de sistemas legados de assinatura, a FreteHub monetiza através de um modelo transacional puramente alinhado ao crescimento: retemos <strong>15%</strong> de comissão (take-rate) em cada transação bem-sucedida de frete intermediada pelo nosso motor de matching inteligente.
+            </p>
+        </div>
+        <div class="stat-callout">15.0%</div>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">Comissão de intermediação por frete</span>
+    </div>
+</div>
+
+<!-- Projections and allocations -->
+<section class="projections-box">
+    <h3 class="prog-title">Alocação Estratégica dos Recursos do Aporte</h3>
+    <p style="text-align: center; color: var(--text-muted); max-width: 600px; margin: 0 auto 3rem; line-height: 1.6;">
+        Buscamos parceiros estratégicos para consolidar nossa tecnologia e expandir a capilaridade da frota nas principais rotas agroindustriais brasileiras.
+    </p>
+    
+    <div class="use-of-proceeds">
+        <div class="proceed-item">
+            <div class="proceed-pct">60%</div>
+            <strong style="color: white; display: block; margin-bottom: 0.5rem;">Expansão Tecnológica</strong>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Aprimoramento do motor de matching IA, infraestrutura de telemetria GPS e RAG embarcado.</span>
+        </div>
+        <div class="proceed-item">
+            <div class="proceed-pct">25%</div>
+            <strong style="color: white; display: block; margin-bottom: 0.5rem;">Aquisição de Clientes (CAC)</strong>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Campanhas focadas em grandes embarcadores agroindustriais (soja/milho) e cooperativas regionais.</span>
+        </div>
+        <div class="proceed-item">
+            <div class="proceed-pct">15%</div>
+            <strong style="color: white; display: block; margin-bottom: 0.5rem;">Capital de Giro e Operação</strong>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Seguro de cargas automatizado e suporte logístico em tempo real 24/7 para motoristas.</span>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 3.5rem;">
+        <a href="{% url 'landing' %}#leads" class="btn-premium" style="padding: 0.8rem 2.5rem; font-size: 1rem;">Solicitar Memorando de Investimento</a>
+    </div>
+</section>
+{% endblock %}

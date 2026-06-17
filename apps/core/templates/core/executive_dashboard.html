@@ -1,0 +1,554 @@
+{% extends 'core/base.html' %}
+
+{% block title %}FreteHub | Painel de Controle Executivo & Analítico{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 1.5rem;
+    }
+
+    .dashboard-title h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: white;
+    }
+
+    .dashboard-title p {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-top: 0.25rem;
+    }
+
+    /* Tabs styling */
+    .dashboard-tabs {
+        display: flex;
+        gap: 0.5rem;
+        background-color: var(--bg-secondary);
+        padding: 0.35rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border);
+        margin-bottom: 2rem;
+    }
+
+    .tab-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        padding: 0.6rem 1.5rem;
+        border-radius: 0.375rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    .tab-btn:hover {
+        color: white;
+    }
+
+    .tab-btn.active {
+        background: var(--accent);
+        color: white;
+    }
+
+    /* KPI Grid styling */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+        padding: 1.75rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 110px;
+    }
+
+    .kpi-label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+    }
+
+    .kpi-value {
+        font-size: 1.85rem;
+        font-weight: 800;
+        color: white;
+        margin-top: 0.5rem;
+        font-family: 'Outfit', sans-serif;
+    }
+
+    .kpi-trend {
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .trend-up { color: #34d399; }
+    .trend-down { color: var(--danger); }
+
+    /* Visual Grid Layout */
+    .dash-main-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+        margin-bottom: 4rem;
+    }
+
+    @media (max-width: 900px) {
+        .dash-main-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .chart-container {
+        min-height: 350px;
+        position: relative;
+    }
+
+    /* Leads Funnel representation styling */
+    .funnel-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-top: 1rem;
+    }
+
+    .funnel-stage {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        border-radius: 0.375rem;
+        font-size: 0.85rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .funnel-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background: rgba(37, 99, 235, 0.08);
+        border-right: 2px solid var(--accent);
+        pointer-events: none;
+    }
+
+    .funnel-stage:nth-child(2) .funnel-bar { background: rgba(59, 130, 246, 0.08); border-right-color: #60a5fa; }
+    .funnel-stage:nth-child(3) .funnel-bar { background: rgba(16, 185, 129, 0.08); border-right-color: #34d399; }
+    .funnel-stage:nth-child(4) .funnel-bar { background: rgba(245, 158, 11, 0.08); border-right-color: #fbbf24; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <div class="dashboard-title">
+        <h1>Painel Estratégico</h1>
+        <p>Visão geral de negócios, inteligência artificial, repasses e métricas operacionais do ecossistema FreteHub.</p>
+    </div>
+    <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); color: #34d399; padding: 0.5rem 1rem; border-radius: 0.375rem; font-size: 0.8rem; font-weight: 700;">
+        🟢 MODO APRESENTAÇÃO ATIVO
+    </div>
+</div>
+
+<!-- Tabs Selector -->
+<div class="dashboard-tabs">
+    <button class="tab-btn active" data-tab="executive">Estratégico & Comercial</button>
+    <button class="tab-btn" data-tab="operations">Operações de Frota</button>
+    <button class="tab-btn" data-tab="financial">Financeiro & Repasses</button>
+    <button class="tab-btn" data-tab="ai">Métricas de Inteligência IA</button>
+</div>
+
+<!-- KPI Summary Section -->
+<div class="kpi-grid" id="kpi-container">
+    <!-- Fills dynamically depending on selected tab -->
+</div>
+
+<!-- Main Graphic Layout -->
+<div class="dash-main-grid">
+    <!-- Chart Box -->
+    <div class="glass-card">
+        <h3 style="color: white; font-size: 1.25rem; margin-bottom: 1.5rem;" id="chart-title">Desempenho Financeiro e Volume Geral</h3>
+        <div class="chart-container">
+            <canvas id="dashboardChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- Secondary Analytical Box -->
+    <div class="glass-card" id="side-card">
+        <h3 style="color: white; font-size: 1.25rem; margin-bottom: 1.5rem;" id="side-card-title">Funil de Leads Comerciais</h3>
+        <div id="side-card-content">
+            <!-- Fills dynamically -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Include ChartJS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const chartTitle = document.getElementById('chart-title');
+        const sideCardTitle = document.getElementById('side-card-title');
+        const sideCardContent = document.getElementById('side-card-content');
+        const kpiContainer = document.getElementById('kpi-container');
+        
+        let currentChart = null;
+
+        // Fetch metrics from backend and render views
+        function loadDashboardTab(tabName) {
+            tabButtons.forEach(btn => {
+                if (btn.getAttribute('data-tab') === tabName) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            fetch(`/api/metrics/${tabName}/`)
+            .then(res => res.json())
+            .then(res => {
+                if (res.success) {
+                    renderDashboard(tabName, res.data);
+                } else {
+                    alert('Erro ao carregar dados analíticos.');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                alert('Erro ao conectar com servidor analítico.');
+            });
+        }
+
+        // Handle tabs event listeners
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tab = this.getAttribute('data-tab');
+                loadDashboardTab(tab);
+            });
+        });
+
+        // Initialize with 'executive' tab
+        loadDashboardTab('executive');
+
+        function renderDashboard(tab, data) {
+            // Reset Chart
+            if (currentChart) {
+                currentChart.destroy();
+            }
+            
+            const ctx = document.getElementById('dashboardChart').getContext('2d');
+            
+            if (tab === 'executive') {
+                chartTitle.textContent = 'Evolução de GMV e Receita Líquida (Take-Rate)';
+                sideCardTitle.textContent = 'Funil de Leads FreteHub';
+                
+                // KPIs
+                kpiContainer.innerHTML = `
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Volume Geral (GMV)</span>
+                        <span class="kpi-value">R$ ${data.total_gmv.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <div class="kpi-trend trend-up">▲ 18.2% vs mês anterior</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Receita Líquida Plataforma</span>
+                        <span class="kpi-value">R$ ${data.total_revenue.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <div class="kpi-trend trend-up">▲ 15.0% take-rate</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Taxa de Conclusão</span>
+                        <span class="kpi-value">${data.completion_rate}%</span>
+                        <div class="kpi-trend trend-up">▲ 0.8% eficiência</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Ticket Médio</span>
+                        <span class="kpi-value">R$ ${data.average_ticket.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <div class="kpi-trend">Consistentemente estável</div>
+                    </div>
+                `;
+                
+                // Side Content (Leads Funnel)
+                const funnel = data.leads_funnel;
+                const maxVal = Math.max(funnel.new, funnel.contacted, funnel.converted, funnel.lost, 1);
+                
+                sideCardContent.innerHTML = `
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Candidatos de investimento e captação comercial convertidos pelo setor de RI.</p>
+                    <div class="funnel-list">
+                        <div class="funnel-stage">
+                            <div class="funnel-bar" style="width: ${(funnel.new/maxVal*100)}%;"></div>
+                            <span style="z-index: 1;">Nível Inicial (Novos)</span>
+                            <span style="font-weight: 700; z-index: 1;">${funnel.new} Leads</span>
+                        </div>
+                        <div class="funnel-stage">
+                            <div class="funnel-bar" style="width: ${(funnel.contacted/maxVal*100)}%;"></div>
+                            <span style="z-index: 1;">Em Negociação (Contatos)</span>
+                            <span style="font-weight: 700; z-index: 1;">${funnel.contacted}</span>
+                        </div>
+                        <div class="funnel-stage">
+                            <div class="funnel-bar" style="width: ${(funnel.converted/maxVal*100)}%;"></div>
+                            <span style="z-index: 1;">Parcerias Fechadas (Convertidos)</span>
+                            <span style="font-weight: 700; z-index: 1; color: #34d399;">${funnel.converted}</span>
+                        </div>
+                        <div class="funnel-stage">
+                            <div class="funnel-bar" style="width: ${(funnel.lost/maxVal*100)}%;"></div>
+                            <span style="z-index: 1;">Cancelados / Perdidos</span>
+                            <span style="font-weight: 700; z-index: 1; color: var(--danger);">${funnel.lost}</span>
+                        </div>
+                    </div>
+                `;
+                
+                // Chart
+                currentChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.charts.monthly_labels,
+                        datasets: [
+                            {
+                                label: 'GMV Estimado (R$)',
+                                data: data.charts.monthly_gmv,
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.05)',
+                                tension: 0.3,
+                                fill: true
+                            },
+                            {
+                                label: 'Receita Plataforma (R$)',
+                                data: data.charts.monthly_revenue,
+                                borderColor: '#10b981',
+                                backgroundColor: 'rgba(16, 185, 129, 0.05)',
+                                tension: 0.3,
+                                fill: true
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { labels: { color: '#9ca3af' } }
+                        },
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } }
+                        }
+                    }
+                });
+                
+            } else if (tab === 'operations') {
+                chartTitle.textContent = 'Distribuição Geral por Tipo de Status Logístico';
+                sideCardTitle.textContent = 'Ocorrências e Telemetria';
+                
+                kpiContainer.innerHTML = `
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Fretes em Trânsito</span>
+                        <span class="kpi-value">${data.active_freights} Fretes</span>
+                        <div class="kpi-trend trend-up">Ativos em tempo real</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Desvios Identificados</span>
+                        <span class="kpi-value">${data.deviations}</span>
+                        <div class="kpi-trend trend-down">🚨 Exige intervenção</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Motoristas Online</span>
+                        <span class="kpi-value">${data.drivers_online} Motoristas</span>
+                        <div class="kpi-trend trend-up">Disponíveis geograficamente</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Chamados Críticos</span>
+                        <span class="kpi-value" style="color: var(--danger);">${data.critical_tickets} Ocorrências</span>
+                        <div class="kpi-trend">Em aberto no suporte</div>
+                    </div>
+                `;
+                
+                sideCardContent.innerHTML = `
+                    <div style="text-align: center; padding: 2rem 1rem;">
+                        <span style="font-size: 3rem; display: block; margin-bottom: 1rem;">📡</span>
+                        <strong style="color: white; display: block; margin-bottom: 0.5rem;">Torre de Controle Operacional</strong>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                            Acompanhe telemetry ticks, desvios inesperados e simule trajetos na nossa central de incidentes geográficos.
+                        </p>
+                        <a href="/demo/live-operation/" class="btn-premium" style="display: block; padding: 0.6rem;">Acessar Torre de Controle</a>
+                    </div>
+                `;
+                
+                currentChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.charts.status_labels,
+                        datasets: [{
+                            label: 'Total de Ordens de Frete',
+                            data: data.charts.status_counts,
+                            backgroundColor: ['#fbbf24', '#3b82f6', '#ef4444', '#10b981', '#6b7280'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } },
+                            y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#9ca3af' } }
+                        }
+                    }
+                });
+                
+            } else if (tab === 'financial') {
+                chartTitle.textContent = 'Distribuição por Método de Pagamento (Faturamento)';
+                sideCardTitle.textContent = 'Estrutura Tarifária FreteHub';
+                
+                kpiContainer.innerHTML = `
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Faturamento Total (GMV)</span>
+                        <span class="kpi-value">R$ ${data.total_gmv.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <div class="kpi-trend trend-up">Transacionado no portal</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Taxas Cobradas (Intermediação)</span>
+                        <span class="kpi-value" style="color: #34d399;">R$ ${data.commissions.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <div class="kpi-trend trend-up">15% plataforma net</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Repasse a Motoristas</span>
+                        <span class="kpi-value">R$ ${data.driver_payouts.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <div class="kpi-trend trend-up">85% do valor do frete</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Faturamento de Transportadoras</span>
+                        <span class="kpi-value">R$ ${data.carrier_billing.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        <div class="kpi-trend">Frotas corporativas integradas</div>
+                    </div>
+                `;
+                
+                sideCardContent.innerHTML = `
+                    <div style="padding: 1rem 0.5rem;">
+                        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 1rem;">Estrutura do Modelo de Receita</h4>
+                        <ul style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; list-style: none; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <li style="display: flex; justify-content: space-between;">
+                                <span>Plataforma Take-Rate:</span>
+                                <strong style="color: white;">15% (Retido na fonte)</strong>
+                            </li>
+                            <li style="display: flex; justify-content: space-between;">
+                                <span>Repasse Motorista:</span>
+                                <strong style="color: white;">85% (Pago após entrega)</strong>
+                            </li>
+                            <li style="display: flex; justify-content: space-between;">
+                                <span>Faturamento Médio Agrícola:</span>
+                                <strong style="color: white;">R$ 2.450,00 por frete</strong>
+                            </li>
+                            <li style="display: flex; justify-content: space-between;">
+                                <span>Taxa de Seguro de Carga:</span>
+                                <strong style="color: white;">R$ 35,00 fixo por frete</strong>
+                            </li>
+                        </ul>
+                    </div>
+                `;
+                
+                currentChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: data.charts.payment_labels,
+                        datasets: [{
+                            data: data.charts.payment_counts,
+                            backgroundColor: ['#10b981', '#3b82f6', '#fbbf24'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: '#9ca3af' } }
+                        }
+                    }
+                });
+                
+            } else if (tab === 'ai') {
+                chartTitle.textContent = 'Consultas da Carga na Base de Conhecimento RAG';
+                sideCardTitle.textContent = 'Status do Assistente IA';
+                
+                kpiContainer.innerHTML = `
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Sessões de Conversa</span>
+                        <span class="kpi-value">${data.total_sessions} Sessões</span>
+                        <div class="kpi-trend trend-up">Iniciadas pelos clientes</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Mensagens Trocadas</span>
+                        <span class="kpi-value">${data.total_messages}</span>
+                        <div class="kpi-trend trend-up">Respostas analíticas geradas</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Taxa de Resolução Automatizada</span>
+                        <span class="kpi-value" style="color: #34d399;">${data.resolution_rate}%</span>
+                        <div class="kpi-trend trend-up">Resolvidos sem intervenção</div>
+                    </div>
+                    <div class="glass-card kpi-card">
+                        <span class="kpi-label">Transição p/ Humano</span>
+                        <span class="kpi-value">${(100 - data.resolution_rate).toFixed(1)}%</span>
+                        <div class="kpi-trend">Encaminhados para suporte</div>
+                    </div>
+                `;
+                
+                sideCardContent.innerHTML = `
+                    <div style="padding: 1rem 0.5rem;">
+                        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 1rem;">Conhecimento RAG Ativo</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+                            Nossa IA utiliza busca de similaridade de cosseno estruturada com base nas categorias cadastradas do regulamento FreteHub.
+                        </p>
+                        <ul style="color: var(--text-muted); font-size: 0.85rem; display: flex; flex-direction: column; gap: 0.5rem; list-style: none;">
+                            <li style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: #34d399;">✔</span> <strong>veiculos</strong>: Guia de recomendação de cargas
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: #34d399;">✔</span> <strong>graos</strong>: Regulamento de lona e bitrem
+                            </li>
+                            <li style="display: flex; align-items: center; gap: 0.5rem;">
+                                <span style="color: #34d399;">✔</span> <strong>lgpd</strong>: Consentimento e direitos de privacidade
+                            </li>
+                        </ul>
+                    </div>
+                `;
+                
+                currentChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: data.charts.rag_categories,
+                        datasets: [{
+                            data: data.charts.rag_counts,
+                            backgroundColor: ['#3b82f6', '#10b981', '#fbbf24', '#6b7280'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: '#9ca3af' } }
+                        }
+                    }
+                });
+            }
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,262 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Solicitar Frete — FreteHub{% endblock %}
+
+{% block extra_css %}
+.form-container {
+    max-width: 700px;
+    margin: 1.5rem auto;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 600px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-group-full {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-main);
+}
+
+.form-control {
+    width: 100%;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    color: var(--text-main);
+    font-family: inherit;
+    font-size: 0.9rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.checkbox-group input {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--accent);
+}
+
+.item-card {
+    background-color: rgba(255,255,255,0.02);
+    border: 1px dashed var(--border);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.section-subtitle {
+    font-size: 1rem;
+    color: white;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 0.85rem;
+    font-size: 1rem;
+    margin-top: 1.5rem;
+}
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <div class="glass-card">
+        <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: white;">Nova Solicitação de Frete</h2>
+        
+        <form id="newFreightForm">
+            {% csrf_token %}
+            
+            <!-- Address Grid -->
+            <div class="section-subtitle">Rotas e Localizações</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Endereço de Origem</label>
+                    <input type="text" id="originAddress" class="form-control" placeholder="Ex: Av. Paulista, 1000, São Paulo" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Endereço de Destino</label>
+                    <input type="text" id="destAddress" class="form-control" placeholder="Ex: Av. Brigadeiro, 500, São Paulo" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Latitude de Origem</label>
+                    <input type="number" step="0.000001" id="originLat" class="form-control" value="-23.561324" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Longitude de Origem</label>
+                    <input type="number" step="0.000001" id="originLng" class="form-control" value="-46.656432" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Latitude de Destino</label>
+                    <input type="number" step="0.000001" id="destLat" class="form-control" value="-23.567845" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Longitude de Destino</label>
+                    <input type="number" step="0.000001" id="destLng" class="form-control" value="-46.648934" required>
+                </div>
+            </div>
+
+            <!-- Cargo summary -->
+            <div class="section-subtitle">Informações da Carga</div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label class="form-label">Categoria de Carga</label>
+                    <select id="cargoCategory" class="form-control" required>
+                        <option value="EQUIPMENTS">Equipamentos, Peças e Móveis</option>
+                        <option value="DRY_GRAINS">Grãos Secos (Soja, Milho, etc)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group form-group-full">
+                    <label class="form-label">Descrição Geral da Carga</label>
+                    <textarea id="cargoDescription" rows="2" class="form-control" placeholder="Ex: Transporte de Geladeira duplex frágil" required></textarea>
+                </div>
+            </div>
+
+            <!-- Cargo Item card -->
+            <div class="section-subtitle">Itens Detalhados</div>
+            <div class="item-card" id="itemBlock">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Tipo de Carga Específico</label>
+                        <select id="cargoTypeSlug" class="form-control" required>
+                            {% for c in cargo_types %}
+                            <option value="{{ c.slug }}">{{ c.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Descrição do Item</label>
+                        <input type="text" id="itemDesc" class="form-control" placeholder="Ex: Geladeira Continental" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Peso do Item (KG)</label>
+                        <input type="number" step="0.1" id="itemWeight" class="form-control" placeholder="Peso em KG" value="85" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Volume do Item (M³)</label>
+                        <input type="number" step="0.1" id="itemVolume" class="form-control" placeholder="Volume em M³" value="1.5" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Quantidade</label>
+                        <input type="number" id="itemQty" class="form-control" value="1" min="1" required>
+                    </div>
+                    
+                    <div class="form-group" style="display:flex; flex-direction:column; justify-content:center;">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="itemFragile">
+                            <label for="itemFragile" style="font-size:0.85rem;">Carga Frágil</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="itemHelper">
+                            <label for="itemHelper" style="font-size:0.85rem;">Requer Ajudante</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorAlert" style="color:var(--danger); font-size:0.85rem; display:none; margin-bottom:1rem; text-align:center;"></div>
+            <button type="submit" class="btn-premium btn-submit">Simular e Enviar Solicitação</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('newFreightForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const errorAlert = document.getElementById('errorAlert');
+    errorAlert.style.display = 'none';
+    
+    // Build single item payload
+    const itemPayload = {
+        cargo_type_slug: document.getElementById('cargoTypeSlug').value,
+        description: document.getElementById('itemDesc').value,
+        estimated_weight_kg: parseFloat(document.getElementById('itemWeight').value),
+        estimated_volume_m3: parseFloat(document.getElementById('itemVolume').value),
+        quantity: parseInt(document.getElementById('itemQty').value),
+        is_fragile: document.getElementById('itemFragile').checked,
+        requires_helper: document.getElementById('itemHelper').checked,
+        requires_insurance: document.getElementById('cargoCategory').value === 'DRY_GRAINS'
+    };
+    
+    const payload = {
+        origin_address: document.getElementById('originAddress').value,
+        origin_latitude: document.getElementById('originLat').value,
+        origin_longitude: document.getElementById('originLng').value,
+        destination_address: document.getElementById('destAddress').value,
+        destination_latitude: document.getElementById('destLat').value,
+        destination_longitude: document.getElementById('destLng').value,
+        cargo_category: document.getElementById('cargoCategory').value,
+        cargo_description: document.getElementById('cargoDescription').value,
+        items: [itemPayload]
+    };
+    
+    // Post to FreightOrder API endpoint
+    fetch('/api/freight-orders/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(res => {
+        if (res.success || res.id) {
+            // Success redirection
+            window.location.href = '/portal/dashboard/';
+        } else {
+            errorAlert.textContent = res.message || 'Erro ao registrar solicitação de frete.';
+            errorAlert.style.display = 'block';
+        }
+    })
+    .catch(err => {
+        errorAlert.textContent = 'Erro de conexão com o servidor.';
+        errorAlert.style.display = 'block';
+    });
+});
+</script>
+{% endblock %}

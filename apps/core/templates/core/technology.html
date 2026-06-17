@@ -1,0 +1,173 @@
+{% extends 'core/base.html' %}
+
+{% block title %}FreteHub | Infraestrutura e Arquitetura de Rede{% endblock %}
+
+{% block extra_css %}
+<style>
+    .tech-hero {
+        text-align: center;
+        padding: 4rem 0 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .tech-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ffffff, #9ca3af);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 4rem 0;
+    }
+
+    .tech-card {
+        padding: 2.5rem 2rem;
+    }
+
+    .tech-title {
+        font-size: 1.25rem;
+        color: white;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .tech-text {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .topology-container {
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 0.75rem;
+        padding: 3rem;
+        margin-bottom: 6rem;
+    }
+
+    .topology-section-title {
+        font-size: 1.8rem;
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .topology-diagram-text {
+        font-family: monospace;
+        white-space: pre-wrap;
+        background: var(--bg-primary);
+        border: 1px solid var(--border);
+        color: #10b981;
+        padding: 2rem;
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        overflow-x: auto;
+        margin-bottom: 2rem;
+    }
+
+    .topology-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    @media (max-width: 768px) {
+        .topology-list {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .topology-item {
+        background: var(--bg-tertiary);
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="tech-hero">
+    <h1>Arquitetura & Engenharia</h1>
+    <p style="color: var(--text-muted); font-size: 1.2rem;">
+        Desenvolvido com foco em alta disponibilidade, inteligência artificial preditiva e segurança militar de redes.
+    </p>
+</section>
+
+<!-- Tech Stack Grid -->
+<div class="tech-grid">
+    <div class="glass-card tech-card">
+        <h3 class="tech-title"><span style="color: #3b82f6;">🌐</span> Django & ASGI Daphne</h3>
+        <p class="tech-text">
+            Nossa base robusta em Python Django lida com transações financeiras críticas, faturamentos e persistência, enquanto o canal assíncrono ASGI via Daphne processa WebSockets para telemetria satelital em tempo real.
+        </p>
+    </div>
+
+    <div class="glass-card tech-card">
+        <h3 class="tech-title"><span style="color: #10b981;">📍</span> PostgreSQL & PostGIS</h3>
+        <p class="tech-text">
+            Armazenamento de dados geográficos e cálculo geométrico de distâncias e áreas de risco operacional rodoviário. Permite a busca ultraveloz por motoristas disponíveis em raios de atuação geográfica.
+        </p>
+    </div>
+
+    <div class="glass-card tech-card">
+        <h3 class="tech-title"><span style="color: #fbbf24;">⚡</span> Redis Caching & Memory</h3>
+        <p class="tech-text">
+            Gerenciamento de filas de telemetria GPS e cache distribuído de alta velocidade. Absorve a carga contínua de envios de coordenadas telemétricas sem onerar a base relacional PostgreSQL.
+        </p>
+    </div>
+</div>
+
+<!-- Network Topology Section -->
+<section class="topology-container">
+    <h3 class="topology-section-title">Visualização da Topologia de Rede</h3>
+    <p style="color: var(--text-muted); text-align: center; max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.6;">
+        A infraestrutura FreteHub é isolada em uma VPC segura na nuvem, dividida em sub-redes estratégicas públicas e privadas, garantindo isolamento total dos bancos de dados.
+    </p>
+    
+    <div class="topology-diagram-text">[Usuário Mobile / Web] 
+      │ 
+      ▼
+[DNS Gerenciado] ──► [CDN + WAF] ──► [Load Balancer] ──► [API Gateway]
+                                                              │
+   ┌──────────────────────────────────────────────────────────┘
+   ▼
+[VPC / Rede Privada FreteHub]
+   ├── Sub-rede Pública:
+   │     └── NAT Gateway (Saída de dados controlada de APIs)
+   │
+   ├── Sub-rede Privada de Aplicação:
+   │     ├── Django ASGI Server (Telemetria)
+   │     ├── Django WSGI Web Server (Painéis operacionais)
+   │     └── Motor RAG IA & Embeddings
+   │
+   └── Sub-rede Privada de Dados (Isolada da Internet):
+         ├── PostgreSQL + PostGIS (Estruturado e Geográfico)
+         └── Redis Cache (Posição de frotas e telemetria volátil)</div>
+
+    <div class="topology-list">
+        <div class="topology-item">
+            <strong style="color: white; display: block; margin-bottom: 0.5rem;">Sub-rede Privada de Dados</strong>
+            <p class="tech-text">
+                Todos os bancos de dados estão alocados em sub-redes isoladas, sem IP público ou acesso direto de entrada pela internet. Toda comunicação é exclusivamente autorizada para servidores da aplicação.
+            </p>
+        </div>
+        <div class="topology-item">
+            <strong style="color: white; display: block; margin-bottom: 0.5rem;">Integrações de Saída Seguras</strong>
+            <p class="tech-text">
+                Requisições para APIs de mapas (Google Maps), serviços bancários (Pix) ou notas fiscais (SEFAZ) passam obrigatoriamente por firewalls de saída controlados e gateways de tradução de endereços (NAT).
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

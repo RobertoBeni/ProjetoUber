@@ -1,0 +1,226 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Dashboard do Cliente — FreteHub{% endblock %}
+
+{% block extra_css %}
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.kpi-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+}
+
+.kpi-num {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    margin-top: 0.25rem;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.freight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.freight-item {
+    border-left: 4px solid var(--accent);
+}
+
+.freight-item-grãos {
+    border-left-color: var(--warning);
+}
+
+.freight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.freight-id {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.badge {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 9999px;
+}
+
+.badge-requested { background-color: rgba(156,163,175,0.15); color: #e5e7eb; }
+.badge-waiting { background-color: rgba(245,158,11,0.15); color: #fbbf24; }
+.badge-transit { background-color: rgba(37,99,235,0.15); color: #60a5fa; }
+.badge-delivered { background-color: rgba(16,185,129,0.15); color: #34d399; }
+.badge-completed { background-color: #064e3b; color: #a7f3d0; }
+.badge-cancelled { background-color: rgba(239,68,68,0.15); color: #fca5a5; }
+
+.freight-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.freight-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+}
+
+.btn-sm {
+    padding: 0.35rem 0.85rem;
+    font-size: 0.8rem;
+    border-radius: 0.25rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-muted);
+}
+{% endblock %}
+
+{% block content %}
+<div class="kpi-row">
+    <div class="kpi-card">
+        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Total de Fretes</div>
+        <div class="kpi-num">{{ total_orders }}</div>
+    </div>
+    <div class="kpi-card">
+        <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">Aguardando Coleta</div>
+        <div class="kpi-num" style="color: var(--warning);">
+            {% if pending_payments.count > 0 %}{{ pending_payments.count }}{% else %}0{% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <!-- Main Column: Freights -->
+    <div>
+        <div class="section-title">
+            <span>Ordens de Frete Recentes</span>
+            <a href="{% url 'client-new-freight' %}" class="btn-premium btn-sm" style="text-decoration: none;">+ Novo Frete</a>
+        </div>
+
+        <div class="freight-list">
+            {% for f in freights %}
+            <div class="glass-card freight-item {% if f.cargo_category == 'DRY_GRAINS' %}freight-item-grãos{% endif %}">
+                <div class="freight-header">
+                    <span class="freight-id">Frete #{{ f.id|slice:":8" }}</span>
+                    <span class="badge 
+                        {% if f.status == 'requested' %}badge-requested
+                        {% elif f.status == 'waiting_driver' %}badge-waiting
+                        {% elif f.status in 'driver_found,in_transit,near_destination' %}badge-transit
+                        {% elif f.status == 'delivered' %}badge-delivered
+                        {% elif f.status == 'completed' %}badge-completed
+                        {% else %}badge-cancelled{% endif %}">
+                        {{ f.get_status_display }}
+                    </span>
+                </div>
+                
+                <div class="freight-details">
+                    <div>
+                        <strong>Origem:</strong> {{ f.origin_address }}
+                    </div>
+                    <div>
+                        <strong>Destino:</strong> {{ f.destination_address }}
+                    </div>
+                    <div>
+                        <strong>Carga:</strong> {{ f.cargo_description }}
+                    </div>
+                    <div>
+                        <strong>Veículo Recomendado:</strong> {{ f.get_required_vehicle_type_display|default:f.required_vehicle_type }}
+                    </div>
+                </div>
+
+                <div class="freight-footer">
+                    <span style="font-weight: 700; color: white;">R$ {{ f.final_price }}</span>
+                    <div>
+                        {% if f.status == 'requested' %}
+                            <!-- Simulate Payment option -->
+                            {% for pay in pending_payments %}
+                                {% if pay.freight_order == f %}
+                                <form method="post" action="/api/payments/{{ pay.id }}/simulate-confirmation/" style="display:inline;" onsubmit="setTimeout(function(){location.reload();}, 500);">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-premium btn-sm" style="background: var(--warning); box-shadow: none;">Pagar Simulação</button>
+                                </form>
+                                {% endif %}
+                            {% endfor %}
+                        {% elif f.status in 'driver_found,in_transit,near_destination,arrived_at_destination,delivered' %}
+                            <a href="{% url 'client-tracking' f.id %}" class="btn-premium btn-sm" style="text-decoration: none;">Acompanhar Rota</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="glass-card empty-state">
+                <p>Nenhuma ordem de frete cadastrada ainda.</p>
+                <a href="{% url 'client-new-freight' %}" class="btn-premium btn-sm" style="text-decoration: none; margin-top: 1rem; display: inline-block;">Solicitar Meu Primeiro Frete</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Sidebar: Pending actions -->
+    <div>
+        <div class="section-title">Ações Requeridas</div>
+        <div class="glass-card" style="padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem;">
+            {% if pending_payments.count > 0 %}
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Você possui fretes aguardando o pagamento de simulação para entrar na fila de pareamento de motoristas.</p>
+                {% for p in pending_payments %}
+                <div style="background-color: var(--bg-tertiary); border: 1px solid var(--border); padding: 0.75rem; border-radius: 0.375rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="font-size: 0.8rem;">
+                        <strong>Frete #{{ p.freight_order.id|slice:":8" }}</strong><br>
+                        R$ {{ p.amount }}
+                    </div>
+                    <form method="post" action="/api/payments/{{ p.id }}/simulate-confirmation/" onsubmit="setTimeout(function(){location.reload();}, 500);">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-premium btn-sm" style="background: var(--success); font-size: 0.75rem; padding: 0.25rem 0.5rem; box-shadow: none;">Pagar</button>
+                    </form>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center;">Tudo em dia! Sem pendências de pagamento.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

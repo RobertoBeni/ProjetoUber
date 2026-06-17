@@ -1,0 +1,14 @@
+
+Crie uma base real, escalável e organizada, pronta para evoluir para produção.
+
+Priorize primeiro o MVP funcional, mas deixe a arquitetura preparada para:
+
+- portal web completo
+- aplicativo mobile
+- rastreamento em tempo real
+- IA embutida
+- integração com mapas
+- integração com pagamentos
+- integração fiscal
+- escala em cloud
+- segurança e LGPD

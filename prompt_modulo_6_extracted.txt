@@ -1,0 +1,226 @@
+Antes de Fazermos um o módulo 6 faça o seguinte prompt:
+Atualize todo o projeto para substituir a marca anterior pela nova marca oficial:
+FreteHub
+A marca FreteHub deve ser usada como nome principal do sistema em todas as páginas públicas, dashboards, menus, rodapés, títulos, textos institucionais, documentação e páginas de investidores.
+IMPORTANTE:
+- Substituir todas as ocorrências visíveis por "FreteHub".
+- Se houver referências internas de código, variáveis ou constantes relacionadas à marca, atualizar de forma segura sem quebrar funcionalidades.
+- Não remover funcionalidades existentes.
+- Não alterar regras de negócio.
+- Apenas atualizar identidade visual, textos de marca, títulos, slogans, SEO, documentação e apresentação.
+========================================================
+1. IDENTIDADE DA MARCA
+========================================================
+Nome oficial:
+FreteHub
+Slogan principal:
+"O hub inteligente que conecta cargas, motoristas e transportadoras."
+Headline principal da landing page:
+"FreteHub: a plataforma inteligente para conectar fretes, motoristas e operações em tempo real."
+Subtítulo:
+"Uma solução completa para solicitar, rastrear, otimizar e gerenciar fretes com inteligência artificial, dados em tempo real, matching automático, ETA inteligente e dashboards executivos."
+Texto institucional:
+"FreteHub é uma plataforma inteligente de logística criada para conectar embarcadores, motoristas, transportadoras e operações em um único ecossistema digital. Com inteligência artificial, roteirização otimizada, rastreamento em tempo real, ETA automático, matching de fretes e dashboards executivos, a solução ajuda empresas a reduzir custos, aumentar previsibilidade e escalar operações logísticas com segurança."
+============================================================
+2. APLICAÇÃO DA MARCA
+========================================================
+Aplicar "FreteHub" em:
+1. Header/menu superior
+2. Hero section da landing page
+3. Footer
+4. Página inicial
+5. Página de investidores
+6. Página de demonstração
+7. Página de produto
+8. Página de tecnologia
+9. Página de segurança
+10. Dashboard executivo
+11. Dashboard operacional
+12. Dashboard financeiro
+13. Dashboard de IA
+14. Portal do cliente
+15. Portal da transportadora
+16. Portal do motorista
+17. Painel administrativo
+18. Títulos SEO
+19. Meta descriptions
+20. README
+21. docs/investor_demo.md
+22. Mensagens do modo demonstração
+23. E-mails/templates públicos, se existirem
+========================================================
+3. LOGO TEXTUAL
+========================================================
+Criar uma logo textual moderna para:
+FreteHub
+Conceito visual:
+- "Frete" representa o negócio principal
+- "Hub" representa conexão, centralização, plataforma e marketplace
+- Usar fonte moderna, bold, limpa e tecnológica
+- "Frete" pode usar branco, cinza claro ou azul claro
+- "Hub" pode usar gradiente azul/ciano/verde
+- Pode adicionar ícone simples de rota, pin, caminhão ou conexão
+- Manter visual profissional, premium, brasileiro e adequado para investidores
+Sugestão visual em texto:
+FreteHub
+Onde:
+- Frete = confiança e operação
+- Hub = tecnologia, conexão e escala
+========================================================
+4. HERO DA PRIMEIRA PÁGINA
+========================================================
+Atualizar a primeira dobra da landing page para:
+Título principal:
+FreteHub
+Slogan:
+"O hub inteligente que conecta cargas, motoristas e transportadoras."
+Headline:
+"FreteHub: a plataforma inteligente para conectar fretes, motoristas e operações em tempo real."
+Texto de apoio:
+"Solicite, rastreie, otimize e gerencie fretes com inteligência artificial, matching automático, ETA inteligente, rastreamento em tempo real e dashboards executivos para tomada de decisão."
+Botões principais:
+- "Ver Demonstração"
+- "Simular Frete"
+- "Acessar Dashboard"
+- "Apresentação para Investidores"
+Adicionar badge no topo:
+"FreteHub Platform"
+ou
+"Logística inteligente com IA"
+Se DEMO_MODE=true, também exibir:
+"Modo Demonstração"
+========================================================
+5. SLOGANS ALTERNATIVOS
+========================================================
+Adicionar variações de slogan ao longo das páginas públicas:
+- "Fretes mais inteligentes, rápidos e rastreáveis."
+- "O hub da logística moderna."
+- "Conecte cargas, motoristas e transportadoras em tempo real."
+- "Do pedido à entrega, tudo em uma única plataforma."
+- "Rastreamento, IA e gestão logística no mesmo lugar."
+- "Menos custos, mais previsibilidade e mais controle."
+- "A nova central inteligente de fretes."
+========================================================
+6. PÁGINA DE INVESTIDORES
+========================================================
+Atualizar a página /investors/ com a nova marca.
+Texto de abertura:
+"FreteHub nasceu para resolver um dos maiores desafios da logística: conectar demanda, capacidade de transporte e inteligência operacional em tempo real."
+Mensagem para investidores:
+"Estamos construindo uma plataforma escalável para digitalizar, automatizar e otimizar o mercado de fretes, conectando embarcadores, motoristas autônomos, transportadoras e dados logísticos em um único hub inteligente."
+Chamada final:
+"FreteHub é mais do que um sistema de fretes. É uma infraestrutura digital para a logística inteligente."
+Botões:
+- "Ver Demonstração"
+- "Agendar Apresentação"
+- "Conhecer Dashboard Executivo"
+- "Simular Operação"
+========================================================
+7. PÁGINA DE PRODUTO
+========================================================
+Atualizar textos para:
+"Com o FreteHub, empresas e pessoas podem solicitar fretes, acompanhar entregas, consultar ETA, acessar documentos, gerenciar pagamentos e usar IA para tomar decisões melhores."
+Destacar módulos:
+- Solicitação de frete
+- Matching inteligente
+- Rastreamento em tempo real
+- Gestão de motoristas
+- Gestão de veículos
+- Gestão de transportadoras
+- Precificação
+- Roteirização
+- ETA
+- Documentos
+- Pagamentos
+- Suporte
+- IA assistente
+- Dashboards executivos
+========================================================
+8. PÁGINA DE TECNOLOGIA
+========================================================
+Atualizar textos para:
+"FreteHub foi desenhado com arquitetura moderna, APIs escaláveis, dados geográficos, automação assíncrona, WebSocket, IA e estrutura preparada para cloud."
+Manter menções técnicas anteriores.
+========================================================
+9. PÁGINA DE SEGURANÇA
+========================================================
+Atualizar textos para:
+"No FreteHub, segurança, rastreabilidade e controle de acesso são parte central da arquitetura."
+Destacar:
+- JWT
+- Permissões por perfil
+- Auditoria
+- LGPD
+- Logs
+- Mascaramento de dados
+- Proteção de documentos
+- Segurança da IA
+========================================================
+10. DASHBOARDS
+========================================================
+Atualizar títulos dos dashboards:
+- "FreteHub Executive Dashboard"
+- "FreteHub Operações Inteligentes"
+- "FreteHub Financeiro"
+- "FreteHub IA"
+- "FreteHub Cliente"
+- "FreteHub Transportadora"
+- "FreteHub Motorista"
+Nos dashboards, usar textos como:
+- "Visão executiva do ecossistema FreteHub"
+- "Operação logística em tempo real"
+- "Indicadores estratégicos para escala"
+- "Dados demonstrativos do FreteHub"
+- "Modo Demonstração FreteHub"
+========================================================
+11. SEO
+========================================================
+Atualizar titles e meta descriptions.
+Meta title principal:
+FreteHub | Plataforma Inteligente de Fretes com IA
+Meta description:
+Conecte cargas, motoristas e transportadoras com IA, rastreamento em tempo real, matching automático, ETA inteligente e dashboards executivos.
+Open Graph title:
+FreteHub — O hub inteligente da logística moderna
+Open Graph description:
+Uma plataforma completa para solicitar, rastrear, otimizar e gerenciar fretes com inteligência artificial e dados em tempo real.
+========================================================
+12. DOCUMENTAÇÃO
+========================================================
+Atualizar README e docs/investor_demo.md para usar "FreteHub".
+Adicionar seção:
+"Identidade da Marca"
+Conteúdo:
+Nome:
+FreteHub
+Posicionamento:
+"FreteHub é o hub inteligente de fretes que conecta cargas, motoristas, transportadoras e dados em tempo real."
+Proposta de valor:
+"Reduzir custos logísticos, aumentar previsibilidade, melhorar rastreabilidade e automatizar decisões operacionais usando tecnologia e inteligência artificial."
+========================================================
+13. CUIDADO COM NOMES ANTIGOS
+========================================================
+Procurar e substituir:
+- Uber da Logística, quando estiver como nome principal
+- Sistema Inteligente de Logística, quando estiver como marca principal
+Manter "Sistema Inteligente de Logística" apenas como descrição genérica, se fizer sentido.
+Exemplo correto:
+"FreteHub é um sistema inteligente de logística."
+Exemplo incorreto:
+"O Sistema Inteligente de Logística é a marca principal."
+========================================================
+14. CRITÉRIOS DE ACEITE
+========================================================
+A alteração estará concluída quando:
+1. "FreteHub" aparecer como marca principal na landing page.
+2. Header, footer e dashboards usarem FreteHub.
+3. Página de investidores usar FreteHub.
+4. SEO usar FreteHub.
+5. README usar FreteHub.
+6. docs/investor_demo.md usar FreteHub.
+7. Modo demonstração exibir "Modo Demonstração FreteHub".
+8. Todas as funcionalidades existentes continuarem funcionando.
+9. Testes principais continuarem passando.
+Este módulo é focado em criar uma frente visual poderosa, com primeira página criativa, dashboards, consultas, KPIs, visual de plataforma inteligente, experiência para investidores e demonstração comercial do Sistema Inteligente de Logística.
+A ideia é que, ao abrir o sistema, o investidor veja algo moderno, tecnológico, confiável e escalável.
+Continue o desenvolvimento do projeto Uber da Logística / Sistema Inteligente de Logística usando Django.Não remova funcionalidades dos módulos anteriores.Neste Módulo 6, implemente uma camada visual, comercial, executiva e demonstrativa para apresentar o sistema a investidores, clientes estratégicos, transportadoras, embarcadores e parceiros.O objetivo é criar uma primeira impressão extremamente profissional, moderna, criativa e convincente, mostrando que o sistema é uma plataforma inteligente de logística com IA, rastreamento, dashboards, automação, matching de motoristas, roteirização, ETA, gestão de fretes, gestão de frota, análise operacional e potencial de escala.============================================================1. OBJETIVO DO MÓDULO 6============================================================Criar uma frente inicial visual e comercial para o sistema, composta por:- Landing page institucional e investidora- Página inicial criativa e chamativa- Dashboard executivo- Dashboard operacional- Dashboard financeiro- Dashboard logístico- Dashboard de IA- Painel de demonstração em tempo real- Páginas públicas para convencer investidores- Área de apresentação do produto- Área de simulação de frete- Área de indicadores de mercado- Área de diferenciais competitivos- Área de impacto econômico- Área de crescimento e escalabilidade- Front-end responsivo e moderno- Back-end com APIs para métricas e consultas- Dados demonstrativos para simulaçãoEste módulo deve transformar o sistema em uma plataforma apresentável para captação de investimento.============================================================2. ESTILO VISUAL E POSICIONAMENTO============================================================Criar uma identidade visual moderna, tecnológica e premium.O sistema deve transmitir:- Inteligência- Escalabilidade- Segurança- Automação- Eficiência logística- Tecnologia de IA- Confiança- Potencial de mercado- Redução de custos- Aumento de produtividade- Visão de futuroEstilo visual sugerido:- Tema escuro premium com detalhes em azul, verde, ciano ou roxo- Cards com glassmorphism ou visual SaaS moderno- Gradientes tecnológicos- Ícones de logística, IA, mapas, caminhões, rotas, gráficos e automação- Animações leves- Layout responsivo- Visual inspirado em dashboards SaaS, fintechs, plataformas de mobilidade e startups de IACriar opção de tema claro/escuro se possível.============================================================3. TECNOLOGIA DE FRONT-END============================================================Usar uma das abordagens abaixo, priorizando a mais adequada para integrar ao Django existente:Opção A — Django Templates com HTMX, Alpine.js e Tailwind CSS:- Ideal para MVP rápido- Fácil integração- Menos complexidadeOpção B — Front-end separado com React ou Next.js:- Criar estrutura preparada para SPA- Consumir APIs Django REST- Melhor visual comercialEscolha a melhor opção considerando velocidade, estabilidade e facilidade de apresentação para investidor.Caso use Django Templates, implementar:- templates organizados- base.html- componentes reutilizáveis- partials- Tailwind CSS- Alpine.js para interações- Chart.js ou ApexCharts para gráficos- Leaflet.js ou mapa placeholder para rotas- animações CSS levesCaso use React/Next.js, implementar:- frontend/- páginas públicas- dashboards- componentes- chamadas API- layout responsivo- gráficos- autenticação JWT preparada============================================================4. PÁGINA INICIAL / LANDING PAGE INVESTIDORA============================================================Criar uma página pública em:GET /ou:GET /landing/Essa será a primeira página do sistema.Ela deve ser extremamente criativa, chamativa e persuasiva.Seções obrigatórias:------------------------------------------------------------4.1 HERO SECTION------------------------------------------------------------Criar uma primeira dobra impactante com título forte já mencionado.Exemplos de título:"Sistema Inteligente de Logística com IA, Rastreamento em Tempo Real e Matching Automático de Fretes"Subtítulo:"Uma plataforma completa para solicitar, rastrear, otimizar e gerenciar fretes com inteligência artificial, dados em tempo real, automação operacional e dashboards executivos."Elementos visuais:- Caminhão em rota digital- Mapa tecnológico- Linhas de conexão- Cards flutuantes com indicadores- ETA em tempo real- IA recomendando veículo- Simulação de frete em andamentoBotões principais:- "Ver Demonstração"- "Simular Frete"- "Acessar Dashboard"- "Apresentação para Investidores"------------------------------------------------------------4.2 SEÇÃO DE PROBLEMA------------------------------------------------------------Mostrar os problemas do mercado logístico:- Falta de rastreabilidade- Fretes manuais- Alto custo operacional- Baixa previsibilidade- Ociosidade de veículos- Dificuldade de encontrar motoristas confiáveis- Falta de dados para tomada de decisão- Atrasos e perdas- Atendimento fragmentado- Pouca inteligência na roteirizaçãoMostrar em cards com ícones.------------------------------------------------------------4.3 SEÇÃO DE SOLUÇÃO------------------------------------------------------------Mostrar como o sistema resolve:- Matching inteligente entre carga e veículo- Motoristas verificados- Rastreamento em tempo real- ETA automático- Precificação inteligente- IA assistente- Dashboards executivos- Gestão de documentos- Pagamentos simulados/integráveis- Roteirização inteligente- Relatórios e auditoria------------------------------------------------------------4.4 SEÇÃO "COMO FUNCIONA"------------------------------------------------------------Criar fluxo visual:1. Cliente solicita frete2. IA recomenda veículo ideal3. Sistema calcula preço e rota4. Motoristas compatíveis recebem oferta5. Motorista aceita6. Carga é rastreada em tempo real7. Cliente acompanha ETA8. Entrega é confirmada9. Dados alimentam dashboards e IA------------------------------------------------------------4.5 SEÇÃO DE INTELIGÊNCIA ARTIFICIAL------------------------------------------------------------Mostrar que a IA ajuda em:- Recomendação de veículo- Resposta a dúvidas- Consulta de ETA- Consulta de status- Abertura de chamados- Apoio ao suporte- Análise de operação- Base de conhecimento RAG- Redução de atendimento humanoCriar bloco visual com exemplo de chat:Usuário:"Qual veículo uso para transportar soja?"IA:"Para soja, recomendamos caminhão graneleiro, bitrem ou rodotrem graneleiro, com proteção contra umidade, lona quando necessário, romaneio, nota fiscal e pesagem."------------------------------------------------------------4.6 SEÇÃO DE DASHBOARDS------------------------------------------------------------Mostrar previews dos dashboards:- Dashboard Executivo- Dashboard Operacional- Dashboard Financeiro- Dashboard de Fretes- Dashboard de Frota- Dashboard de IA- Dashboard de RastreamentoCada preview deve ter gráficos e indicadores fake/demonstrativos se ainda não houver dados reais.------------------------------------------------------------4.7 SEÇÃO DE MERCADO E OPORTUNIDADE------------------------------------------------------------Criar seção para convencer investidor.Mostrar textos estratégicos:- Logística é um dos maiores custos das empresas- Há grande fragmentação entre embarcadores, motoristas e transportadoras- Pequenas e médias empresas precisam de tecnologia acessível- Motoristas autônomos precisam de mais oportunidades- O mercado agrícola exige transporte eficiente de grãos secos- O setor de equipamentos e móveis exige fretes rápidos e rastreáveis- A IA pode reduzir suporte, melhorar matching e aumentar margemCriar cards:- Mercado endereçável- Receita recorrente- Comissão por frete- Planos para empresas- Serviços premium- Dados logísticos- Expansão regionalNão inventar números oficiais falsos. Se necessário, usar textos como "potencial estimado", "simulação" e "modelo projetado".------------------------------------------------------------4.8 SEÇÃO DE MODELO DE NEGÓCIO------------------------------------------------------------Mostrar possíveis fontes de receita:- Comissão por frete- Assinatura para empresas- Plano para transportadoras- Taxa de tecnologia- Serviços premium de rastreamento- IA para suporte e operação- Relatórios avançados- Integrações fiscais e financeiras- Marketplace de seguros- Marketplace de serviços para motoristas------------------------------------------------------------4.9 SEÇÃO DE TRAÇÃO SIMULADA / DEMO------------------------------------------------------------Criar cards de demonstração com dados de exemplo:- 1.240 fretes simulados- 380 motoristas cadastrados- 92 transportadoras- 18% redução média de custo operacional- 27% melhoria em previsibilidade de entrega- 96% rastreabilidade dos eventos- 4.8 avaliação média dos motoristasDeixar claro no código e texto que são "dados demonstrativos do MVP" ou "simulação".------------------------------------------------------------4.10 SEÇÃO DE ROADMAP------------------------------------------------------------Mostrar roadmap:Fase 1:- MVP operacional- Cadastro- Fretes- Motoristas- Veículos- Matching- Rastreamento- IA básicaFase 2:- App mobile- Pagamentos reais- Integrações fiscais- Otimização avançada de rotas- Painéis BIFase 3:- IA preditiva- Expansão nacional- Marketplace de serviços- Integração com ERPs- API pública para embarcadores------------------------------------------------------------4.11 CHAMADA PARA INVESTIDOR------------------------------------------------------------Criar uma seção final forte:"Estamos construindo a infraestrutura inteligente para a nova logística brasileira."Botões:- "Ver Dashboard Executivo"- "Solicitar Apresentação"- "Simular Operação"- "Entrar em Contato"Criar formulário simples de interesse:Campos:- nome- email- telefone- empresa- perfil: - investidor - transportadora - embarcador - parceiro - outro- mensagemSalvar no banco.============================================================5. MODELO PARA LEADS DE INVESTIDORES E PARCEIROS============================================================Criar app ou usar core/commercial.Criar modelo InvestorLead:- id- name- email- phone- company- profile_type: - investor - carrier - shipper - partner - press - other- estimated_interest_level: - low - medium - high - strategic- message- source_page- status: - new - contacted - meeting_scheduled - negotiating - converted - lost- notes- created_at- updated_atCriar endpoints:- POST /api/commercial/leads/- GET /api/admin/commercial/leads/- GET /api/admin/commercial/leads/{id}/- PATCH /api/admin/commercial/leads/{id}/Criar página administrativa:- /operations/investor-leads/Permissões:- Público pode criar lead.- Apenas admin, comercial ou superuser pode listar e editar leads.Auditar criação e alteração de leads.============================================================6. DASHBOARD EXECUTIVO============================================================Criar página:GET /executive/dashboard/ou:GET /operations/executive-dashboard/Este dashboard deve ser visualmente impressionante e útil para investidores.Indicadores principais:- GMV simulado ou real- Receita da plataforma- Fretes criados- Fretes concluídos- Fretes em andamento- Ticket médio- Motoristas cadastrados- Motoristas online- Veículos aprovados- Empresas cadastradas- Transportadoras cadastradas- Taxa de conclusão- Taxa de cancelamento- Tempo médio de entrega- Percentual de entregas no prazo- Pedidos por categoria- Crescimento mensal- Receita por mês- Volume transportado- Cargas de equipamentos- Cargas de grãos secos- Chamados abertos- Conversas resolvidas pela IAGráficos:- Receita mensal- Quantidade de fretes por mês- Fretes por status- Fretes por tipo de carga- Motoristas por status- Veículos por tipo- Entregas no prazo vs atrasadas- Mapa de calor operacional, se possível- Funil comercial de leadsCriar API:GET /api/executive/dashboard/Resposta:{ "success": true, "data": { "kpis": {}, "charts": {}, "last_updated": "" }, "message": "Dashboard executivo carregado com sucesso."}Usar dados reais do banco quando existirem.Quando não existirem, usar modo demo controlado por configuração:DEMO_MODE=trueNunca misturar dados falsos como se fossem reais. Se DEMO_MODE estiver ativo, exibir selo "Modo Demonstração".============================================================7. DASHBOARD OPERACIONAL INTELIGENTE============================================================Criar página:GET /operations/intelligent-dashboard/Indicadores:- Fretes aguardando motorista- Fretes em rota- Fretes atrasados- Fretes com desvio de rota- Fretes parados- Motoristas online- Motoristas disponíveis- Veículos ativos- Ocorrências críticas- Documentos pendentes- Pagamentos pendentes- Tickets abertos- ETA médio- Alertas de operaçãoFuncionalidades:- Lista de fretes críticos- Filtros por status- Filtros por tipo de carga- Filtros por transportadora- Filtros por região- Busca por cliente, motorista, placa, pedido- Timeline de eventos recentes- Cards de alertas- Mapa operacional ou placeholderCriar API:GET /api/operations/intelligent-dashboard/============================================================8. DASHBOARD FINANCEIRO============================================================Criar página:GET /operations/financial-dashboard/Indicadores:- Receita total- Receita do mês- Pagamentos pagos- Pagamentos pendentes- Pagamentos falhos- Repasse a motoristas- Taxa da plataforma- Ticket médio- Receita por tipo de carga- Receita por região- Receita por transportadora- Projeção mensalGráficos:- Receita por mês- Receita por categoria- Status dos pagamentos- Ticket médio mensal- Margem simulada- Ranking de clientesCriar API:GET /api/operations/financial-dashboard/============================================================9. DASHBOARD DE IA============================================================Criar página:GET /operations/ai-dashboard/Indicadores:- Total de conversas- Conversas ativas- Conversas encerradas- Conversas escaladas- Taxa de resolução automática- Intenções mais comuns- Tickets criados pela IA- Perguntas sobre frete- Perguntas sobre documentos- Perguntas sobre rastreamento- Perguntas sobre pagamento- Usuários atendidos- Tempo médio de respostaGráficos:- Conversas por dia- Intenções mais frequentes- Escalonamentos por motivo- Tickets abertos por IA- Base de conhecimento mais consultadaCriar API:GET /api/operations/ai-dashboard/============================================================10. DASHBOARD DE CLIENTE / EMBARCADOR============================================================Melhorar portal do cliente:GET /portal/dashboard/Adicionar:- Total de fretes- Fretes ativos- Fretes entregues- Fretes cancelados- Últimos pedidos- Próxima entrega- Gastos mensais- Fretes por tipo de carga- Status de pagamentos- Atalho para solicitar frete- Atalho para rastrear entrega- Chat IA em destaqueCriar visual moderno e simples.============================================================11. DASHBOARD DA TRANSPORTADORA============================================================Melhorar portal da transportadora:GET /carrier/dashboard/Adicionar:- Motoristas vinculados- Motoristas online- Veículos cadastrados- Veículos aprovados- Fretes disponíveis- Fretes aceitos- Fretes concluídos- Ganhos estimados- Ranking de motoristas- Ocorrências- Documentos pendentes- Mapa da frota ou placeholder- Alertas operacionais============================================================12. DASHBOARD DO MOTORISTA============================================================Criar ou melhorar área do motorista:GET /driver/dashboard/Adicionar:- Fretes disponíveis- Frete atual- Ganhos estimados- Histórico de entregas- Avaliação média- Status do perfil- Status do veículo- Documentos pendentes- Botão ficar online/offline- Próxima coleta- Chat IA para ajudaCriar endpoints de apoio:GET /api/driver/dashboard/============================================================13. SIMULADOR DE FRETE NA PÁGINA INICIAL============================================================Criar um simulador público ou semi-público na landing page.Campos:- origem- destino- tipo de carga- peso estimado- volume estimado- urgência- precisa ajudante- precisa seguroAo simular:- chamar API de estimativa- retornar veículo recomendado- preço estimado demo- distância estimada- tempo estimado- vantagens do sistema- CTA para criar conta ou falar com comercialEndpoint:POST /api/public/freight-simulator/Regras:- Não exigir login para simulação simples- Aplicar rate limit- Não criar frete real sem autenticação- Se usuário autenticado quiser prosseguir, direcionar para criação real de freteResposta:{ "success": true, "data": { "recommended_vehicle": "", "estimated_price": "", "estimated_distance_km": "", "estimated_duration_minutes": "", "benefits": [], "cta": "" }, "message": "Simulação realizada com sucesso."}============================================================14. PÁGINA DE DEMONSTRAÇÃO AO VIVO============================================================Criar página:GET /demo/live-operation/Objetivo:Mostrar uma operação logística simulada em tempo real.Elementos:- mapa ou placeholder com caminhões- cards de fretes em andamento- ETA mudando- eventos de rastreamento aparecendo- IA sugerindo ações- alertas operacionais- gráfico em tempo real- timeline de eventosCriar modo demo que simula:- localização de caminhão- mudança de status- entrega próxima- ocorrência- resposta da IA- atualização de dashboardPode usar dados fake controlados e identificados como "Demonstração".============================================================15. BACK-END DE CONSULTAS E MÉTRICAS============================================================Criar services para métricas:- ExecutiveMetricsService- OperationalMetricsService- FinancialMetricsService- AIMetricsService- CommercialMetricsService- DemoDataServiceCada service deve:- consultar dados reais- aplicar filtros- retornar estrutura limpa para gráficos- usar cache quando necessário- suportar modo demoFiltros comuns:- data inicial- data final- status- tipo de carga- transportadora- cliente- motorista- veículo- região- categoriaEndpoints:GET /api/metrics/executive/GET /api/metrics/operations/GET /api/metrics/financial/GET /api/metrics/ai/GET /api/metrics/commercial/GET /api/metrics/demo/Adicionar cache com Redis para dashboards:- cache por 1 a 5 minutos- invalidar em eventos importantes quando possível============================================================16. CONSULTAS AVANÇADAS============================================================Criar área:GET /operations/advanced-search/Permitir consultar:- Fretes- Clientes- Motoristas- Veículos- Transportadoras- Pagamentos- Documentos- Tickets- Conversas de IA- Leads comerciaisFiltros:- texto livre- status- data- tipo- categoria- origem- destino- usuário- placa- CPF/CNPJ mascarado- transportadora- valor mínimo/máximoEndpoint:GET /api/operations/search/Resposta agrupada:{ "success": true, "data": { "freights": [], "drivers": [], "vehicles": [], "companies": [], "payments": [], "tickets": [], "ai_conversations": [], "leads": [] }, "message": "Consulta realizada com sucesso."}Aplicar permissões rigorosas.Mascarar dados sensíveis.============================================================17. PÁGINA DE APRESENTAÇÃO PARA INVESTIDOR============================================================Criar página:GET /investors/Objetivo:Ser uma página estilo pitch deck web.Seções:1. Visão geral2. Problema3. Solução4. Produto5. Demonstração6. Mercado7. Modelo de negócio8. Diferenciais9. Tecnologia10. Inteligência Artificial11. Segurança e LGPD12. Roadmap13. Indicadores do MVP14. Uso do investimento15. ContatoSeção "Uso do investimento":- Desenvolvimento mobile- Integrações de pagamento- Integrações fiscais- Infraestrutura cloud- Aquisição de motoristas- Aquisição de clientes- Equipe comercial- Segurança e compliance- IA e dadosCriar CTA:- "Quero conhecer a tese"- "Agendar reunião"- "Receber apresentação"Salvar contatos em InvestorLead.============================================================18. PÁGINA DE PRODUTO============================================================Criar página:GET /product/Mostrar módulos do sistema:- Solicitação de fretes- Cadastro de motoristas- Cadastro de veículos- Matching inteligente- IA assistente- Roteirização- ETA- Rastreamento- Pagamentos- Documentos- Dashboards- Suporte- Auditoria- LGPDCada módulo deve ter card visual com descrição.============================================================19. PÁGINA DE TECNOLOGIA============================================================Criar página:GET /technology/Mostrar arquitetura:- Django- Django REST Framework- PostgreSQL/PostGIS- Redis- Celery- Channels- WebSocket- pgvector- IA com RAG- APIs externas- Cloud ready- Docker- Kubernetes readyMostrar diagrama visual simples com HTML/CSS/SVG se possível.============================================================20. PÁGINA DE SEGURANÇA E COMPLIANCE============================================================Criar página:GET /security/Mostrar:- Autenticação JWT- Permissões por perfil- Auditoria- Logs- LGPD- Controle de acesso- Mascaramento de dados- Documentos protegidos- Rastreabilidade de eventos- Segurança da IA============================================================21. COMPONENTES VISUAIS REUTILIZÁVEIS============================================================Criar componentes para:- KPI Card- Chart Card- Status Badge- Timeline- Activity Feed- Map Placeholder- Freight Status Card- Driver Card- Vehicle Card- AI Chat Preview- Investor CTA- Pricing Simulator- Lead Form- Dashboard Layout- Sidebar- Topbar- Theme Toggle- Loading Skeleton- Empty State- Error State============================================================22. DADOS DEMONSTRATIVOS============================================================Atualizar seed:python manage.py seed_initial_dataAdicionar dados suficientes para dashboards:- 50 clientes demo- 80 motoristas demo- 60 veículos demo- 20 transportadoras demo- 200 fretes demo- 150 pagamentos demo- 300 tracking events demo- 100 notificações demo- 50 conversas IA demo- 30 tickets suporte demo- 20 leads comerciais demoDistribuir os dados por status, datas e categorias para gerar gráficos bonitos.Criar comando opcional:python manage.py seed_demo_dashboardEste comando deve criar apenas dados para apresentação comercial.Garantir que dados demo sejam claramente marcados com:is_demo = trueQuando o modelo não tiver campo is_demo, usar metadata ou padrão de nomes.============================================================23. CONFIGURAÇÃO DEMO_MODE============================================================Adicionar variável no .env.example:DEMO_MODE=trueQuando DEMO_MODE=true:- mostrar selo "Modo Demonstração"- permitir dados demonstrativos- preencher dashboards com simulações- facilitar apresentação ao investidorQuando DEMO_MODE=false:- usar apenas dados reais- não mostrar métricas simuladas como reais============================================================24. ADMIN DJANGO============================================================Customizar Django Admin para:- InvestorLead- Métricas comerciais se houver- Dados demo- Configurações comerciais- Leads por status- Leads por perfil- Leads por origemAdicionar filtros:- perfil- status- nível de interesse- data- origem============================================================25. PERMISSÕES============================================================Definir permissões:Páginas públicas:- /- /landing/- /investors/- /product/- /technology/- /security/- /demo/live-operation/- /api/public/freight-simulator/- /api/commercial/leads/Páginas protegidas:- dashboards operacionais- dashboard financeiro- dashboard de IA- consultas avançadas- leads comerciaisRegras:- Admin acessa tudo- Operação acessa dashboard operacional- Financeiro acessa financeiro- Suporte acessa tickets e IA- Comercial acessa leads e investidores- Cliente acessa apenas seu dashboard- Motorista acessa apenas seu dashboard- Transportadora acessa apenas seus dados============================================================26. PERFORMANCE============================================================Implementar:- cache para métricas- paginação nas consultas- queries otimizadas- select_related e prefetch_related- índices se necessário- agregações no banco- evitar N+1 queries- compressão de assets se possível============================================================27. RESPONSIVIDADE============================================================Todas as páginas devem funcionar bem em:- desktop- notebook- tablet- celularA landing page deve ser bonita no mobile.Os dashboards devem adaptar cards e gráficos para telas menores.============================================================28. ACESSIBILIDADE============================================================Implementar:- contraste adequado- labels nos formulários- navegação por teclado básica- textos alternativos- botões claros- feedback de erro/sucesso============================================================29. SEO BÁSICO============================================================Para páginas públicas, adicionar:- title- meta description- Open Graph- favicon- robots básico- sitemap simples se possívelExemplos de títulos:- "Uber da Logística | Plataforma Inteligente de Fretes com IA"- "Sistema Inteligente de Logística com Rastreamento em Tempo Real"- "Logística com IA, Matching de Fretes e Dashboards Executivos"============================================================30. TESTES============================================================Criar testes para:- acesso à landing page- envio de lead- simulador de frete público- dashboard executivo autenticado- dashboard operacional autenticado- dashboard financeiro com permissão- bloqueio de acesso sem permissão- métricas executivas retornando estrutura correta- modo demo ativo- consulta avançada- mascaramento de dados sensíveis- seed_demo_dashboard============================================================31. DOCUMENTAÇÃO============================================================Atualizar README com:- objetivo do Módulo 6- rotas públicas- rotas de dashboards- endpoints de métricas- como ativar DEMO_MODE- como gerar dados demo- como acessar a apresentação de investidores- como usar simulador público- como testar permissões- como personalizar identidade visualCriar também arquivo:docs/investor_demo.mdConteúdo:- roteiro para apresentação ao investidor- páginas que devem ser mostradas- sequência recomendada- principais argumentos- principais métricas simuladas- cuidado para explicar dados demo- proposta de valor- modelo de negócio- próximos passos============================================================32. ROTEIRO DE DEMONSTRAÇÃO PARA INVESTIDOR============================================================Criar no docs/investor_demo.md um roteiro como:1. Abrir landing page2. Mostrar o problema da logística3. Mostrar a solução4. Simular um frete5. Mostrar recomendação de veículo6. Mostrar dashboard executivo7. Mostrar operação em tempo real8. Mostrar rastreamento9. Mostrar IA respondendo dúvidas10. Mostrar dashboard financeiro11. Mostrar roadmap12. Finalizar com chamada de investimento============================================================33. CRITÉRIOS DE ACEITE DO MÓDULO 6============================================================O módulo estará pronto quando:1. A página inicial pública estiver visualmente forte e persuasiva.2. A página de investidores funcionar como pitch deck web.3. O simulador público de frete funcionar.4. O formulário de lead salvar dados no banco.5. Dashboard executivo funcionar.6. Dashboard operacional funcionar.7. Dashboard financeiro funcionar.8. Dashboard de IA funcionar.9. Portal do cliente tiver dashboard melhorado.10. Portal da transportadora tiver dashboard melhorado.11. Portal do motorista tiver dashboard.12. Consulta avançada funcionar.13. Modo demonstração funcionar.14. Seed demo gerar dados para apresentação.15. Dados demo forem identificados corretamente.16. Permissões estiverem protegendo dashboards.17. Layout for responsivo.18. README e docs/investor_demo.md estiverem atualizados.19. Testes principais passarem.20. O sistema estiver pronto para ser apresentado a um investidor.Implemente este módulo com código real, templates ou frontend moderno, APIs, services, serializers, views, URLs, permissions, admin, testes, seed demo e documentação.

@@ -1,0 +1,112 @@
+{% extends 'core/base.html' %}
+
+{% block title %}FreteHub | Segurança, Auditoria e Privacidade de Dados{% endblock %}
+
+{% block extra_css %}
+<style>
+    .security-hero {
+        text-align: center;
+        padding: 4rem 0 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .security-hero h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(135deg, #ffffff, #9ca3af);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .security-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2.5rem;
+        margin: 4rem 0;
+    }
+
+    .sec-card {
+        padding: 2.5rem;
+    }
+
+    .sec-badge-glow {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 1.25rem;
+    }
+
+    .badge-jwt {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        color: #60a5fa;
+    }
+
+    .badge-lgpd {
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        color: #34d399;
+    }
+
+    .badge-audit {
+        background: rgba(245, 158, 11, 0.1);
+        border: 1px solid rgba(245, 158, 11, 0.25);
+        color: #fbbf24;
+    }
+
+    .sec-title {
+        font-size: 1.4rem;
+        color: white;
+        margin-bottom: 0.75rem;
+    }
+
+    .sec-text {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="security-hero">
+    <h1>Conformidade & Segurança Militar</h1>
+    <p style="color: var(--text-muted); font-size: 1.2rem;">
+        Proteção avançada de identidades, criptografia em trânsito e repouso, e conformidade integral com a LGPD.
+    </p>
+</section>
+
+<div class="security-grid">
+    <!-- JWT -->
+    <div class="glass-card sec-card">
+        <span class="sec-badge-glow badge-jwt">Criptográfico</span>
+        <h3 class="sec-title">Autenticação JWT Robusta</h3>
+        <p class="sec-text">
+            Nossas APIs REST são protegidas pelo protocolo JSON Web Token (JWT). Com tempos de expiração controlados, renovação por refresh tokens rotativos e lista de bloqueio ativa, garantimos que cada requisição móvel ou web seja assinada e validada criptograficamente.
+        </p>
+    </div>
+
+    <!-- LGPD -->
+    <div class="glass-card sec-card">
+        <span class="sec-badge-glow badge-lgpd">Legalidade</span>
+        <h3 class="sec-title">Privacidade & LGPD</h3>
+        <p class="sec-text">
+            Conformidade plena com a Lei Geral de Proteção de Dados (LGPD). Desenvolvemos um módulo nativo de consentimento do usuário, registrando de forma irrevogável o aceite ativo aos Termos e Políticas da plataforma. Dados sensíveis, como documentos e telefones, sofrem máscaras ativas em exibições secundárias.
+        </p>
+    </div>
+
+    <!-- Audit Log -->
+    <div class="glass-card sec-card">
+        <span class="sec-badge-glow badge-audit">Rastreabilidade</span>
+        <h3 class="sec-title">Logs de Auditoria Estritos</h3>
+        <p class="sec-text">
+            Todas as ações de criação, modificação de status de carga, cadastros de motoristas e acessos administrativos críticos disparam gatilhos no nosso módulo de Auditoria. Cada log armazena data/hora exata, usuário executor, IP do solicitante e agente de navegador, mantendo um rastro histórico transparente.
+        </p>
+    </div>
+</div>
+{% endblock %}

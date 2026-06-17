@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -90,12 +91,11 @@
                 <span class="modal-close">&times;</span>
                 <h2>Novo Frete</h2>
                 <form id="freightForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="originAddress">Endereço de Origem</label>
-                            <input type="text" id="originAddress" placeholder="Rua, número, cidade" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="originAddress">Endereço de Origem</label>
+                        <input type="text" id="originAddress" placeholder="Rua, número, cidade" required>
                     </div>
+                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="originLat">Latitude</label>
@@ -107,12 +107,11 @@
                         </div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="destAddress">Endereço de Destino</label>
-                            <input type="text" id="destAddress" placeholder="Rua, número, cidade" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="destAddress">Endereço de Destino</label>
+                        <input type="text" id="destAddress" placeholder="Rua, número, cidade" required>
                     </div>
+                    
                     <div class="form-row">
                         <div class="form-group">
                             <label for="destLat">Latitude</label>
@@ -148,34 +147,17 @@
                         </div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="vehicleType">Tipo de Veículo</label>
-                            <select id="vehicleType" required>
-                                <option value="SMALL_UTILITY">Utilitário Pequeno</option>
-                                <option value="PICKUP">Picape</option>
-                                <option value="FIORINO">Fiorino</option>
-                                <option value="VAN">Van</option>
-                                <option value="LIGHT_TRUCK">Caminhão Leve (3/4)</option>
-                                <option value="MEDIUM_TRUCK">Caminhão Médio (Toco)</option>
-                                <option value="TRUCK">Caminhão Pesado (Truck)</option>
-                                <option value="BOX_TRUCK">Caminhão Baú</option>
-                                <option value="GRAIN_TRUCK">Caminhão Graneleiro</option>
-                                <option value="GRAIN_TRAILER">Carreta Graneleira</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="bodyType">Tipo de Carroceria</label>
-                            <select id="bodyType" required>
-                                <option value="BOX">Baú (Fechado)</option>
-                                <option value="OPEN">Grade Aberta</option>
-                                <option value="SIDER">Sider</option>
-                                <option value="GRAIN">Graneleiro</option>
-                                <option value="DUMP">Caçamba</option>
-                                <option value="PLATFORM">Prancha</option>
-                                <option value="REFRIGERATED">Frigorífico</option>
-                            </select>
-                        </div>
+                    <div class="form-group">
+                        <label for="vehicleType">Tipo de Veículo</label>
+                        <select id="vehicleType" required>
+                            <option value="SMALL_UTILITY">Utilitário Pequeno</option>
+                            <option value="PICKUP">Picape</option>
+                            <option value="FIORINO">Fiorino</option>
+                            <option value="VAN">Van</option>
+                            <option value="LIGHT_TRUCK">Caminhão Leve (3/4)</option>
+                            <option value="TRUCK">Caminhão Pesado (Truck)</option>
+                            <option value="BOX_TRUCK">Caminhão Baú</option>
+                        </select>
                     </div>
                     
                     <div class="form-row">
@@ -212,11 +194,6 @@
                 </div>
                 
                 <div class="tracking-timeline" id="trackingTimeline">
-                    <!-- Timeline items will be inserted here -->
-                </div>
-                
-                <div class="tracking-map" id="trackingMap">
-                    <p class="empty-state">Mapa em desenvolvimento</p>
                 </div>
             </div>
         </section>
